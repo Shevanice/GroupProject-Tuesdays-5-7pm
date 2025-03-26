@@ -1,0 +1,128 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+}
+h1{
+  background: #08992a;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 83%;
+}
+h2{
+  color: #4A4A4A;
+  margin-top: 2%;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+form {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Product Container */
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.container h2 {
+  grid-column: span 3; /* Ensures the section heading spans the entire row */
+  margin-top: 3rem; /* Additional spacing above each section */
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #4A4A4A;
+  text-align: left; /* Align to the left for clear visual separation */
+  border-bottom: 1px solid #08992a;
+  padding-bottom: 0.5rem;
+}
+.product {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.product h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.product p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.product label {
+  font-size: 1rem;
+  display: block;
+  margin-top: 10px;
+  color: rgb(56, 56, 142);
+}
+
+.product:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Action Buttons */
+.buttons {
+  margin-top: 30px;
+  text-align: center;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"] {
+  background: #08992a;
+  color: #fff;
+}
+
+button[type="reset"] {
+  background: #f4b400;
+  color: #fff;
+}
+
+button[type="button"] {
+  background: #d9534f;
+  color: #fff;
+}
+
+button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}

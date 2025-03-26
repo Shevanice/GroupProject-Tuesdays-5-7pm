@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="invoice.css">
+    <title>Invoice</title>
+</head>
+<body>
+  <h1>Invoice Receipt</h1>
+
+  <section class="receipt">
+    <table>
+        <tr>
+          <th colspan="4" class="table-header">Purchased Products</th>
+        </tr>
+        <tr>
+          <th>Product</th>
+          <th>Price (JMD)</th>
+          <th>Quantity</th>
+          <th>Total (JMD)</th>
+        </tr>
+      <tbody id="productList"></tbody>
+    </table>
+
+    <div class="totals">
+      <p>Subtotal: <span id="subtotal">0</span> JMD</p>
+      <p>GCT: <span id="tax">0</span> JMD</p>
+      <p>Discount: <span id="discount">0</span> JMD</p>
+      <hr>
+      <p class="total-amount">Total: <span id="total">0</span> JMD</p>
+    </div>
+
+    <div class="buttons">
+      <button type="reset">Cancel</button>
+      <button type="button" id="exitBtn" onclick="window.close()">Exit</button>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const productListElem = document.getElementById('productList');
+      const subtotalElem = document.getElementById('subtotal');
+      const taxElem = document.getElementById('tax');
+      const discountElem = document.getElementById('discount');
+      const totalElem = document.getElementById('total');
+
+      let subtotal = 0;
+      const storedProducts = sessionStorage.getItem('selectedProducts');
+      let selectedProducts = storedProducts ? JSON.parse(storedProducts) : [];
+
+      if (selectedProducts.length === 0) {
+        productListElem.innerHTML = '<tr><td colspan="4">No products selected.</td></tr>';
+      } else {
+        selectedProducts.forEach(product => {
+          const row = document.createElement('tr');
+          const productTotal = product.price;
+          subtotal += productTotal;
+          row.innerHTML = `
+              <td>${product.name}</td>
+              <td>${product.price.toFixed(2)}</td>
+              <td>1</td>
+              <td>${productTotal.toFixed(2)}</td>
+              `;
+          productListElem.appendChild(row);
+        });
+      }
+
+      const tax = subtotal * 0.05;
+      const discount = subtotal > 15000 ? subtotal * 0.15 : 0;
+      const total = subtotal + tax - discount;
+
+      subtotalElem.textContent = subtotal.toFixed(2);
+      taxElem.textContent = tax.toFixed(2);
+      discountElem.textContent = discount.toFixed(2);
+      totalElem.textContent = total.toFixed(2);
+
+      // Handle Cancel Button - Restore stock
+    document.querySelector('button[type="reset"]').addEventListener('click', function () {
+      let updatedStock = JSON.parse(sessionStorage.getItem('updatedStock')) || [];
+
+      selectedProducts.forEach(product => {
+        let stockItem = updatedStock.find(item => item.name === product.name);
+        if (stockItem) {
+          stockItem.quantity++; // Restore quantity
+        }
+      });
+
+      sessionStorage.setItem('updatedStock', JSON.stringify(updatedStock));
+      sessionStorage.removeItem('selectedProducts'); // Remove selected products
+      alert("Order canceled.");
+      window.location.href = 'products.html'; // Redirect to product page
+
+    });
+
+    document.querySelector('button[onclick="window.close()"]').addEventListener('click', function () {
+      window.location.href = 'products.html';
+      })
+
+    });
+  </script>
+</body>
+</html>

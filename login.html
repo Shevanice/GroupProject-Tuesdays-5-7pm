@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Login</title>
+</head>
+<body>
+
+    <!-- LOGO SECTION -->
+    <div class="logo-container">
+        <img src="logo.jpeg" alt="Company Logo" class="logo">
+    </div>
+
+    <!-- FORM SECTION -->
+    <div class="form-container">
+        <h1>Login</h1>
+
+        <form id="loginForm">
+            <label for="uname">Username:</label>
+            <input type="text" id="uname" placeholder="Enter Username" required>
+
+            <label for="pwd">Password:</label>
+            <input type="password" id="pwd" placeholder="Enter Password" required minlength="8">
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
+    <!-- JS SECTION -->
+    <script>
+        const sampleUsername = "2407727IA2@";
+        const samplePassword = "WebProgramming/25";
+        let attempts = 3;
+
+        function validateLogin(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const enteredUsername = document.getElementById("uname");
+            const enteredPassword = document.getElementById("pwd");
+            
+            if (enteredUsername.value === sampleUsername && enteredPassword.value === samplePassword) {
+                window.location.href = "products.html";
+            } 
+            else {
+                attempts--;
+                alert(`Incorrect username or password. You have ${attempts} attempt(s) left.`);
+                if (attempts === 0) {
+                    window.location.href = "error.html";
+                }
+            }
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", validateLogin);
+    </script>
+
+</body>
+</html>
