@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #e0e0e0; /* Light gray background */
+            background-color: #e0e0e0;
         }
         .container {
             background: white;
@@ -23,7 +23,7 @@
             flex-direction: column;
         }
         h1 {
-            color: #333; /* Darker text for contrast */
+            color: #333;
             text-align: center;
         }
         label {
@@ -51,11 +51,11 @@
             font-size: 16px;
         }
         #confirmBtn {
-            background-color: #4CAF50; /* Green */
+            background-color: #4CAF50;
             color: white;
         }
         #cancelBtn {
-            background-color: #f44336; /* Red */
+            background-color: #f44336;
             color: white;
         }
         #payment {
@@ -93,11 +93,11 @@
         document.getElementById("confirmBtn").addEventListener("click", function () {
             alert("Order confirmed! Thank you for your purchase.");
             sessionStorage.clear();
-            window.location.href = 'index.html'; // Redirect to homepage
+            window.location.href = 'invoice.html';
         });
 
         document.getElementById("cancelBtn").addEventListener("click", function () {
-            window.location.href = 'product_page.html'; // Redirect back to product page
+            window.location.href = 'product_page.html';
         });
     </script>
 </body>
