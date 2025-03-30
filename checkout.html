@@ -58,9 +58,6 @@
             background-color: #f44336;
             color: white;
         }
-        #payment {
-            background-color: #f9f9f9;
-        }
     </style>
 </head>
 <body>
@@ -85,19 +82,38 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            
             let selectedProducts = JSON.parse(sessionStorage.getItem('selectedProducts')) || [];
+
+            
             let totalAmount = selectedProducts.reduce((sum, product) => sum + product.price, 0);
+
+            
             document.getElementById("payment").value = totalAmount;
         });
 
         document.getElementById("confirmBtn").addEventListener("click", function () {
+            
+            const name = document.getElementById("name").value;
+            const address = document.getElementById("address").value;
+
+            
+            if (!name || !address) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            
             alert("Order confirmed! Thank you for your purchase.");
+
             sessionStorage.clear();
-            window.location.href = 'invoice.html';
+
+            window.location.href = 'index.html';
         });
 
         document.getElementById("cancelBtn").addEventListener("click", function () {
-            window.location.href = 'product_page.html';
+            
+            window.location.href = 'products.html';
         });
     </script>
 </body>
