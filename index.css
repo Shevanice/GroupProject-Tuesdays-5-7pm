@@ -1,4 +1,4 @@
-/* Global Styles */
+
 *{
     margin: 0;
     padding: 0;
@@ -14,7 +14,7 @@ body{
     padding: 10px;
 }
 
-/* Logo Section */
+
 .logo-container{
     display: flex;
     align-items: center;
@@ -27,9 +27,11 @@ body{
 .logo{
     height: 200px;
     width: auto;
-    margin-left: 38%
+    margin-left: 38%;
 }
-.login{
+
+
+button {
     padding: 12px 15px;
     border: none;
     border-radius: 5px;
@@ -41,25 +43,25 @@ body{
     text-transform: uppercase;
     font-weight: bold;
 }
-.login:hover{
+button:hover{
     background: #06691f;
 }
-.login a{
+button a{
     text-decoration: none;
     color: white;
 }
-.login a:hover{
+button a:hover{
     transform: scale(1.05);
-    
 }
 
-/* Welcome Message */
+
 h1{
     color: #4A4A4A;
     margin-bottom: 1%;
     text-align: center;
 }
-/* Personal Info Section */
+
+
 .personal{
     background: #fff;
     padding: 20px 10px;
@@ -75,7 +77,8 @@ h1{
     line-height: 1.6;
     text-align: center;
 }
-/* Contact Section */
+
+
 .contact{
     line-height: 1.6;
 }
@@ -84,7 +87,6 @@ h1{
     color: #555;
     text-align: center;
 }
-
 .contact a{
     font-size: 1rem;
     color: #08992a;
