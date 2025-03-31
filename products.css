@@ -32,19 +32,19 @@ form {
   margin: 0 auto;
 }
 
-/* Product Container */
+
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 .container h2 {
-  grid-column: span 3; /* Ensures the section heading spans the entire row */
-  margin-top: 3rem; /* Additional spacing above each section */
+  grid-column: span 3; 
+  margin-top: 3rem; 
   margin-bottom: 1rem;
   font-size: 1.8rem;
   color: #4A4A4A;
-  text-align: left; /* Align to the left for clear visual separation */
+  text-align: left; 
   border-bottom: 1px solid #08992a;
   padding-bottom: 0.5rem;
 }
@@ -90,7 +90,7 @@ form {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Action Buttons */
+
 .buttons {
   margin-top: 30px;
   text-align: center;
