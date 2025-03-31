@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
-        /* Basic styling for the dashboard */
+        
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -60,7 +60,7 @@
 <h1>Dashboard</h1>
 
 <div class="container">
-    <!-- Show User Frequency -->
+    
     <div class="card" id="userFrequencyCard">
         <h2>User Frequency</h2>
         <p>Male: <span id="maleCount">0</span></p>
@@ -72,7 +72,7 @@
         <p>50+: <span id="age50plus">0</span></p>
     </div>
 
-    <!-- Show Invoices -->
+    
     <div class="card" id="showInvoicesCard">
         <h2>Invoices</h2>
         <input type="text" id="invoiceSearch" placeholder="Search by TRN" class="btn">
@@ -90,7 +90,7 @@
         <div id="searchResult"></div>
     </div>
 
-    <!-- Show User's Invoices -->
+    
     <div class="card" id="userInvoicesCard">
         <h2>User Invoices</h2>
         <input type="text" id="userTRN" placeholder="Enter TRN" class="btn">
@@ -108,21 +108,21 @@
 </div>
 
 <script>
-// Fetch Registered Users from localStorage
+
 const RegisterData = JSON.parse(localStorage.getItem('RegisterData')) || [];
 
-// Function to calculate user frequency based on gender and age group
+
 function ShowUserFrequency() {
     let maleCount = 0, femaleCount = 0, otherCount = 0;
     let age18_25 = 0, age26_35 = 0, age36_50 = 0, age50plus = 0;
 
     RegisterData.forEach(user => {
-        // Gender count
+       
         if (user.gender === 'Male') maleCount++;
         else if (user.gender === 'Female') femaleCount++;
         else otherCount++;
 
-        // Age group count
+        
         const age = user.age;
         if (age >= 18 && age <= 25) age18_25++;
         else if (age >= 26 && age <= 35) age26_35++;
@@ -130,7 +130,7 @@ function ShowUserFrequency() {
         else if (age > 50) age50plus++;
     });
 
-    // Display the counts on the page
+    
     document.getElementById('maleCount').textContent = maleCount;
     document.getElementById('femaleCount').textContent = femaleCount;
     document.getElementById('otherCount').textContent = otherCount;
@@ -140,7 +140,7 @@ function ShowUserFrequency() {
     document.getElementById('age50plus').textContent = age50plus;
 }
 
-// Function to display all invoices
+
 function ShowInvoices() {
     const searchTerm = document.getElementById('invoiceSearch').value;
     const allInvoices = JSON.parse(localStorage.getItem('AllInvoices')) || [];
@@ -157,7 +157,7 @@ function ShowInvoices() {
     document.getElementById('searchResult').textContent = filteredInvoices.length ? '' : 'No invoices found';
 }
 
-// Function to get invoices for a specific user based on TRN
+
 function GetUserInvoices() {
     const userTRN = document.getElementById('userTRN').value;
     const allInvoices = JSON.parse(localStorage.getItem('AllInvoices')) || [];
@@ -172,7 +172,7 @@ function GetUserInvoices() {
     });
 }
 
-// Initialize the dashboard
+
 document.addEventListener('DOMContentLoaded', function () {
     ShowUserFrequency();
 });
