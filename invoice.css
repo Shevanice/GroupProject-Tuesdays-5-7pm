@@ -1,4 +1,4 @@
-/* Global Styles */
+
 body{
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -18,7 +18,7 @@ h1{
     margin-left: 30%;
     margin-top: 8%;
 }
-/* Main Content */
+
 main {
     flex: 1;
     padding: 2rem;
@@ -29,7 +29,7 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Table Styles */
+
 table {
     width: 40%;
     border-collapse: collapse;
@@ -47,7 +47,7 @@ table td {
     padding: 0.8rem;
     border: 1px solid #ddd;
 }
-/* Totals */
+
 .totals {
     text-align: right;
     margin-right: 30%;
