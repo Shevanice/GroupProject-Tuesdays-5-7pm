@@ -143,7 +143,7 @@
     </form>
 
     <script>
-         // Global array of product objects
+         
         const productCatalog = [
             { name: "Aloe", price: 7000, quantity: 7 },
             { name: "Alumier", price: 7000, quantity: 7 },
@@ -172,7 +172,7 @@
         document.getElementById('checkoutBtn').addEventListener('click', function (event) {
         event.preventDefault();
 
-        // Collect selected checkboxes
+        
         const checkboxes = document.querySelectorAll('input[name="product"]:checked');
         let selectedProducts = [];
 
@@ -188,7 +188,7 @@
         });
 
         if (selectedProducts.length > 0) {
-            // Store selected products as a JSON string in sessionStorage
+            
             sessionStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
             sessionStorage.setItem('updatedStock', JSON.stringify(productCatalog));
             window.location.href = 'invoice.html';
