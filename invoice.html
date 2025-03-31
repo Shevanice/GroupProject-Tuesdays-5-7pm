@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="invoice.css">
     <title>Invoice</title>
+    <style>
+        
+        #checkoutBtn {
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none;
+            border-radius: 4px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-top: 10px; 
+        }
+
+       
+        #checkoutBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
   <h1>Invoice Receipt</h1>
@@ -77,38 +95,38 @@
       discountElem.textContent = discount.toFixed(2);
       totalElem.textContent = total.toFixed(2);
 
-      // Handle Cancel Button - Restore stock
+      
       document.querySelector('button[type="reset"]').addEventListener('click', function () {
         let updatedStock = JSON.parse(sessionStorage.getItem('updatedStock')) || [];
 
         selectedProducts.forEach(product => {
           let stockItem = updatedStock.find(item => item.name === product.name);
           if (stockItem) {
-            stockItem.quantity++; // Restore quantity
+            stockItem.quantity++; 
           }
         });
 
         sessionStorage.setItem('updatedStock', JSON.stringify(updatedStock));
-        sessionStorage.removeItem('selectedProducts'); // Remove selected products
+        sessionStorage.removeItem('selectedProducts'); 
         alert("Order canceled.");
-        window.location.href = 'products.html'; // Redirect to product page
+        window.location.href = 'products.html'; 
       });
 
-      // Handle Exit Button - Redirect to product page
+      
       document.querySelector('button[onclick="window.close()"]').addEventListener('click', function () {
         window.location.href = 'products.html';
       });
 
-      // Handle Checkout Button - Redirect to checkout page
+      
       document.getElementById("checkoutBtn").addEventListener("click", function () {
-        // Check if selected products are available
+        
         if (selectedProducts.length === 0) {
           alert("No products selected for checkout.");
           return;
         }
 
-        // Redirect to checkout page
-        window.location.href = 'checkout.html'; // Make sure checkout.html exists
+        
+        window.location.href = 'checkout.html'; 
       });
     });
   </script>
