@@ -34,6 +34,8 @@
     <div class="buttons">
       <button type="reset">Cancel</button>
       <button type="button" id="exitBtn" onclick="window.close()">Exit</button>
+      <!-- Add Checkout Button -->
+      <button type="button" id="checkoutBtn">Checkout</button>
     </div>
   </section>
 
@@ -56,7 +58,7 @@
           const row = document.createElement('tr');
           const productTotal = product.price;
           subtotal += productTotal;
-          row.innerHTML = `
+          row.innerHTML = ` 
               <td>${product.name}</td>
               <td>${product.price.toFixed(2)}</td>
               <td>1</td>
@@ -76,28 +78,40 @@
       totalElem.textContent = total.toFixed(2);
 
       // Handle Cancel Button - Restore stock
-    document.querySelector('button[type="reset"]').addEventListener('click', function () {
-      let updatedStock = JSON.parse(sessionStorage.getItem('updatedStock')) || [];
+      document.querySelector('button[type="reset"]').addEventListener('click', function () {
+        let updatedStock = JSON.parse(sessionStorage.getItem('updatedStock')) || [];
 
-      selectedProducts.forEach(product => {
-        let stockItem = updatedStock.find(item => item.name === product.name);
-        if (stockItem) {
-          stockItem.quantity++; // Restore quantity
-        }
+        selectedProducts.forEach(product => {
+          let stockItem = updatedStock.find(item => item.name === product.name);
+          if (stockItem) {
+            stockItem.quantity++; // Restore quantity
+          }
+        });
+
+        sessionStorage.setItem('updatedStock', JSON.stringify(updatedStock));
+        sessionStorage.removeItem('selectedProducts'); // Remove selected products
+        alert("Order canceled.");
+        window.location.href = 'products.html'; // Redirect to product page
       });
 
-      sessionStorage.setItem('updatedStock', JSON.stringify(updatedStock));
-      sessionStorage.removeItem('selectedProducts'); // Remove selected products
-      alert("Order canceled.");
-      window.location.href = 'products.html'; // Redirect to product page
+      // Handle Exit Button - Redirect to product page
+      document.querySelector('button[onclick="window.close()"]').addEventListener('click', function () {
+        window.location.href = 'products.html';
+      });
 
-    });
+      // Handle Checkout Button - Redirect to checkout page
+      document.getElementById("checkoutBtn").addEventListener("click", function () {
+        // Check if selected products are available
+        if (selectedProducts.length === 0) {
+          alert("No products selected for checkout.");
+          return;
+        }
 
-    document.querySelector('button[onclick="window.close()"]').addEventListener('click', function () {
-      window.location.href = 'products.html';
-      })
-
+        // Redirect to checkout page
+        window.location.href = 'checkout.html'; // Make sure checkout.html exists
+      });
     });
   </script>
 </body>
 </html>
+
