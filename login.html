@@ -18,29 +18,35 @@
         <h1>Login</h1>
 
         <form id="loginForm">
-            <label for="uname">Username:</label>
-            <input type="text" id="uname" placeholder="Enter Username" required>
+            <label for="taxID">TRN</label>
+            <input type="number" id="taxID" placeholder="Enter your TRN" pattern="\d{3}-\d{3}-\d{3}" required>
 
             <label for="pwd">Password:</label>
             <input type="password" id="pwd" placeholder="Enter Password" required minlength="8">
 
             <button type="submit">Login</button>
+            <button type="reset">Cancel</button>
+            <a href="/Reset Password.html">Reset Password</a>
         </form>
     </div>
     
     
-    <script>
-        const sampleUsername = "2407727IA2@";
-        const samplePassword = "WebProgramming/25";
+    <script src="/registration.js">
+        // const sampleUsername = "2407727IA2@";
+        // const samplePassword = "WebProgramming/25";
         let attempts = 3;
 
         function validateLogin(event) {
             event.preventDefault(); 
 
-            const enteredUsername = document.getElementById("uname");
+            const enteredTRN = document.getElementById("taxID");
             const enteredPassword = document.getElementById("pwd");
-            
-            if (enteredUsername.value === sampleUsername && enteredPassword.value === samplePassword) {
+
+            let registrations= JSON.parse(localStorage.getItem("RegistrationData"))
+
+            // This looks in local storage for the TRN and password.
+            // Then it checks if the inputs entered match those in storage,
+            if (registrations.find(user.trn=== enteredTRN && user.password=== enteredPassword)) {
                 window.location.href = "products.html";
             } 
             else {
