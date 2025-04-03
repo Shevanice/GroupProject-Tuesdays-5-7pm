@@ -13,13 +13,14 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         const gender= document.getElementById("gender").value
         const celphone= document.getElementById("cel").value
         const email= document.getElementById("email").value
-        const trnID= document.getElementById("trn")
+        const trnID= document.getElementById("trn").value
         const password= document.getElementById("passwrd").value
-    })
+    
 
 
 // Settting the date of birth
     const DateofBirth= new Date(DOB)
+    const currentYear= new Date.getFullYear()
     
 
 // Making sure the password is the correct length
@@ -31,13 +32,12 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     }
 
     // Calculating the age
-    function ageVerify(age){
-        const age= new Date().getFullYear - DateofBirth.getFullYear()
+    const age= currentYear- DateofBirth.getFullYear()
     if (age< 18){
         alert("You must be 18 years or older to register")
         return
     }
-    }
+
     
     // This changes the registration information in local storage into a JS object.
     let registration= JSON.parse(localStorage.getItem("RegistrationData"))
@@ -46,13 +46,12 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     // This is so we can make an array of the TRNs to cycle through and check they are unique.
     let UserTRN= registration.map (user => user.trn)
 
-// This function checks the TRNs uniqueness by cycling through the array
-// With .every it looks through each object in the array and ensures there are no duplicates.
-    function trnCheck(trnID,x,UserTRN) {
-        return UserTRN.indexOf(trnID) === array.lastIndexOf(trnID)
-        const IDUnique= UserTRN.every(trnCheck)
-        const ensureUnique= UserTRN(trnCheck)
+// This function checks the TRNs uniqueness by cycling through the array and checking if the TRN entered exists.
+    if (UserTRN.includes(trnID)){
+        alert("TRN not unique")
+        return
     }
+    
 
     // Saves all the entered data
     const userData={
@@ -61,7 +60,7 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         DOB,
         gender,
         celphone,
-        trnID,
+        trn: trnID,
         password,
         cart: {},
         invoices: []
@@ -71,11 +70,17 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     // This basically sends and saves the data before resetting the form.
     registration.push(userData)
     // stringify changes JS objects into JSON objects for saving purposes.
-    localStorage.setItem("RegistrationData", JSON.stringify(registration))
+    // The double lines and brackets makes sure it isn't empty.
+    localStorage.setItem("RegistrationData", JSON.stringify(registration)) || []
+    alert("Registration Successful")
     register.reset()
+    window.location.href="/products.html"
+
+})
 
     // The cancel button resets the form.
     cancel.addEventListener("click", ()=>{
         register.reset()
     })
+
 })

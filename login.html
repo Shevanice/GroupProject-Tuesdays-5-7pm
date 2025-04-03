@@ -39,14 +39,16 @@
         function validateLogin(event) {
             event.preventDefault(); 
 
-            const enteredTRN = document.getElementById("taxID");
-            const enteredPassword = document.getElementById("pwd");
+            const enteredTRN = document.getElementById("taxID").value;
+            const enteredPassword = document.getElementById("pwd").value;
 
-            let registrations= JSON.parse(localStorage.getItem("RegistrationData"))
+            let registrations= JSON.parse(localStorage.getItem("RegistrationData")) || []
+
+            let user= registrations.find(user => user.trn=== enteredTRN && user.password=== enteredPassword)
 
             // This looks in local storage for the TRN and password.
             // Then it checks if the inputs entered match those in storage,
-            if (registrations.find(user.trn=== enteredTRN && user.password=== enteredPassword)) {
+            if (user) {
                 window.location.href = "products.html";
             } 
             else {

@@ -72,3 +72,23 @@ button[type="submit"]:hover{
 button[type="submit"]:focus{
     outline: none;
 }
+
+button{
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #fff;
+    background: #08992a;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+button:hover{
+    transform: scale(1.05);
+}
+button:focus{
+    outline: none;
+}
