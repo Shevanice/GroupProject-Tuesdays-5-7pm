@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded",(event)=>{
 // This function checks the TRNs uniqueness by cycling through the array and checking if the TRN entered exists.
     if (UserTRN.includes(trnID)){
         alert("TRN not unique")
-
         return
     }
     
@@ -83,7 +82,7 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     // The double lines and brackets makes sure it isn't empty.
     localStorage.setItem("RegistrationData", JSON.stringify(registration)) || []
     alert("Registration Successful")
-    
+
     register.reset()
     window.location.href="products.html"
 
