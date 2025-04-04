@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         invoices: []
 
     }
-
+    console.log("userData", userData)
     // This basically sends and saves the data before resetting the form.
     registration.push(userData)
     // stringify changes JS objects into JSON objects for saving purposes.
