@@ -59,6 +59,8 @@
                 alert(`Incorrect trn or password. You have ${attempts} attempt(s) left.`);
                 if (attempts === 0) {
                     window.location.href = "error.html";
+                    login= document.getElementById(loginForm)
+                    login.reset()
 
                 }
             }
