@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     
     // This changes the registration information in local storage into a JS object.
     let registration= JSON.parse(localStorage.getItem("RegistrationData"))
-
-    localStorage.setItem("RegistrationData", JSON.stringify(registration)) || []
     console.log("Registration",registration);
+    localStorage.setItem("RegistrationData", JSON.stringify(registration)) || []
+    
 
     // Basically this maps the trn in local storage to the variable UserTrn.
     // This is so we can make an array of the TRNs to cycle through and check they are unique.
