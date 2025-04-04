@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     localStorage.setItem("RegistrationData", JSON.stringify(registration)) || []
     alert("Registration Successful")
     register.reset()
-    window.location.href="/products.html"
+    window.location.href="products.html"
 
 })
 
