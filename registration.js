@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded",(event)=>{
 
 // Settting the date of birth
     const DateofBirth= new Date(DOB)
-    const currentYear= new Date.getFullYear()
+    const currentYear= new Date().getFullYear()
     
 
 // Making sure the password is the correct length
