@@ -47,15 +47,15 @@ document.addEventListener("DOMContentLoaded",(event)=>{
 
     // Basically this maps the trn in local storage to the variable UserTrn.
     // This is so we can make an array of the TRNs to cycle through and check they are unique.
-    let UserTRN= registration.map (user => user.trn)
-    console.log("UserTRN",UserTRN);
+    // let UserTRN= registration.map (user => user.trn)
+    // console.log("UserTRN",UserTRN);
 
 // This function checks the TRNs uniqueness by cycling through the array and checking if the TRN entered exists.
-    if (UserTRN.includes(trnID)){
-        alert("TRN not unique")
+    // if (UserTRN.includes(trnID)){
+        // alert("TRN not unique")
 
-        return
-    }
+        // return
+    // }
     
 
     // Saves all the entered data
