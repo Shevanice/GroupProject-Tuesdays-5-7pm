@@ -19,7 +19,7 @@
 
         <form id="loginForm">
             <label for="taxID">TRN</label>
-            <input type="text" id="taxID" placeholder="Enter your TRN" pattern="^\d{3}-\d{3}-\d{3}$" required>
+            <input type="text" id="taxID" placeholder="Enter your TRN" required>
 
             <label for="pwd">Password:</label>
             <input type="password" id="pwd" placeholder="Enter Password" required minlength="8">
@@ -32,7 +32,7 @@
     </div>
     
     
-    <script src="registration.js">
+    <script>
         // const sampleUsername = "2407727IA2@";
         // const samplePassword = "WebProgramming/25";
         let attempts = 3;
@@ -40,16 +40,17 @@
         function validateLogin(event) {
             event.preventDefault(); 
 
-            const enteredTRN = document.getElementById("taxID").value;
+            const enteredTRN = document.getElementById("taxID").value.trim().replace(/-/g,"");
             const enteredPassword = document.getElementById("pwd").value;
 
             let registrations= JSON.parse(localStorage.getItem("RegistrationData")) || []
 
-            let user= registrations.find(user => user.trn=== enteredTRN && user.password=== enteredPassword)
+            let user= registrations.find(user => user.trn.replace(/-/g,"")=== enteredTRN && user.password=== enteredPassword)
 
             // This looks in local storage for the TRN and password.
             // Then it checks if the inputs entered match those in storage,
             if (user) {
+                alert("Login Successful!")
                 window.location.href = "products.html";
             } 
             else {
