@@ -42,9 +42,13 @@
             event.preventDefault(); 
 
             const enteredTRN = document.getElementById("taxID").value.trim().replace(/-/g,"");
-            const enteredPassword = document.getElementById("pwd").value;
+            const enteredPassword = document.getElementById("pwd").value.trim();
 
             let registrations= JSON.parse(localStorage.getItem("RegistrationData")) || []
+
+            console.log("Entered TRN", `${enteredTRN}`)
+            console.log("Entered Password", `${enteredPassword}`)
+            console.log("Stored Users:", registrations)
 
             let user= registrations.find(user => user.trn.replace(/-/g,"")=== enteredTRN.replace(/-/g,"") && user.password=== enteredPassword)
 
@@ -59,14 +63,14 @@
                 alert(`Incorrect trn or password. You have ${attempts} attempt(s) left.`);
                 if (attempts === 0) {
                     window.location.href = "error.html";
-                    login= document.getElementById(loginForm)
-                    login.reset()
 
                 }
             }
         }
 
-        document.getElementById("loginForm").addEventListener("submit", validateLogin);
+        document.addEventListener("DOMContentLoaded", () =>{
+            document.getElementById("loginForm").addEventListener("submit", validateLogin);
+        })
     </script>
 
 </body>
