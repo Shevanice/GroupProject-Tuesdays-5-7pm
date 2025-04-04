@@ -46,7 +46,7 @@
 
             let registrations= JSON.parse(localStorage.getItem("RegistrationData")) || []
 
-            let user= registrations.find(user => user.trn.replace(/-/g,"")=== enteredTRN && user.password=== enteredPassword)
+            let user= registrations.find(user => user.trn.replace(/-/g,"")=== enteredTRN.replace(/-/g,"") && user.password=== enteredPassword)
 
             // This looks in local storage for the TRN and password.
             // Then it checks if the inputs entered match those in storage,
@@ -59,6 +59,7 @@
                 alert(`Incorrect trn or password. You have ${attempts} attempt(s) left.`);
                 if (attempts === 0) {
                     window.location.href = "error.html";
+
                 }
             }
         }

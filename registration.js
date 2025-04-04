@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         DOB,
         gender,
         celphone,
-        trn: trnID,
+        trn: trnID.replace(/-/g,""),
         password,
         cart: {},
         invoices: []
