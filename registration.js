@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         const celphone= document.getElementById("cel").value.trim()
         const email= document.getElementById("email").value.trim()
         const trnID= document.getElementById("trn").value.trim()
-        const password= document.getElementById("passwrd").value
-    
+        const password= document.getElementById("password").value
+        const age= document.getElementById("age").value
 
 
 // Settting the date of birth
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         password,
         cart: {},
         invoices: []
-
+        age: age
     }
 
     // This basically sends and saves the data before resetting the form.
