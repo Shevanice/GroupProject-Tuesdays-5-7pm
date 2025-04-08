@@ -119,4 +119,22 @@
     transform: scale(1.05);
     opacity: 0.9;
   }
+/* TOTALS SECTION */
+.totals {
+  margin-top: 20px;
+  text-align: right;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.totals p {
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+.totals .total-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #08992a;
+}
   
