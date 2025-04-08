@@ -53,7 +53,7 @@ form {
 #product-list {
   margin-top: 2%;;
   display: grid;
-  grid-template-columns: repeat(3, minmax(400px, 1fr));
+  grid-template-columns: repeat(3,1fr);
   gap: 20px;
   width: 100%;
 }
@@ -66,30 +66,30 @@ form {
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
 }
-#product-list .product img{
+.product img{
   max-width: 100%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 15px;
 }
-#product-list .product h3{
+ .product h3{
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 10px;
 }
-#product-list .product p{
+.product p{
   color: #666;
   font-size: 0.9rem;
   margin-bottom: 15px;
   line-height: 1.6;
 }
-#product-list .product label{
+.product label{
   font-size: 1rem;
   display: block;
   margin-top: 10px;
   color: rgb(56, 56, 142);
 }
-#product-list .product:hover{
+.product:hover{
   transform: scale(1.03);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
