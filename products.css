@@ -13,6 +13,8 @@ body{
   padding: 2rem;
   min-height: 100vh;
 }
+
+/* HEADER SECTION */
 h1{
   background: #08992a;
   color: white;
@@ -32,23 +34,30 @@ form {
   margin: 0 auto;
 }
 
-
-.container {
+/* FORM SECTION */
+.container{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-.container h2 {
-  grid-column: span 3; 
-  margin-top: 3rem; 
+#product-list {
+  margin-top: 2%;;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(390px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+.container h2{
+  grid-column: span 3;
+  margin-top: 3rem;
   margin-bottom: 1rem;
   font-size: 1.8rem;
   color: #4A4A4A;
-  text-align: left; 
+  text-align: left;
   border-bottom: 1px solid #08992a;
   padding-bottom: 0.5rem;
 }
-.product {
+.product{
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -57,46 +66,38 @@ form {
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
 }
-
-.product img {
+.product img{
   max-width: 100%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 15px;
 }
-
-.product h3 {
+.product h3{
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 10px;
 }
-
-.product p {
+.product p{
   color: #666;
   font-size: 0.9rem;
   margin-bottom: 15px;
   line-height: 1.6;
 }
-
-.product label {
+.product label{
   font-size: 1rem;
   display: block;
   margin-top: 10px;
   color: rgb(56, 56, 142);
 }
-
-.product:hover {
+.product:hover{
   transform: scale(1.03);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
-
-
-.buttons {
+.buttons{
   margin-top: 30px;
   text-align: center;
 }
-
-button {
+button{
   padding: 12px 25px;
   font-size: 1rem;
   font-weight: bold;
@@ -106,23 +107,19 @@ button {
   text-transform: uppercase;
   transition: all 0.3s ease;
 }
-
-button[type="submit"] {
+button[type="submit"]{
   background: #08992a;
   color: #fff;
 }
-
-button[type="reset"] {
+button[type="reset"]{
   background: #f4b400;
   color: #fff;
 }
-
-button[type="button"] {
+button[type="button"]{
   background: #d9534f;
   color: #fff;
 }
-
-button:hover {
+button:hover{
   transform: scale(1.05);
   opacity: 0.9;
 }
