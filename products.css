@@ -100,7 +100,7 @@ button {
   transition: all 0.3s ease;
   margin: 0 10px;
 }
-#cartBtn{
+.cartBtn{
   background: #08992a;
   color: #fff;
 }
@@ -109,7 +109,7 @@ button {
   color: #fff;
   padding: 10px;
 }
-#exitBtn{
+.exitBtn{
   background: #d9534f;
   color: #fff;
 }
