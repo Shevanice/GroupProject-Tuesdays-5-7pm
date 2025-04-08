@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="products.css">
+    <title>Cart</title>
+</head>
+<body>
+    <!-- HEADER SECTION -->
+    <h1>MY Cart</h1>
+
+    <!-- CART ITEMS SECTION -->
+    <div class="container">
+        <h2>Selected Products</h2>
+        <div id="cart-items"></div>
+    </div>
+
+    <!-- TOTAL SECTION -->
+    <div class="totals">
+        <p>Subtotal: <span id="subtotal">0.00</span> JMD</p>
+        <p>GCT (5%): <span id="tax">0.00</span> JMD</p>
+        <p>Discount: <span id="discount">0.00</span> JMD</p>
+        <hr>
+        <p class="total-amount">Total: <span id="total">0.00</span> JMD</p>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="buttons">
+        <button id="clear-cart">Clear All</button>
+        <button id="checkout">Check Out</button>
+        <button id="close-cart">Close</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+        const cartItemsContainer = document.getElementById("cart-items");
+        const subtotalElem = document.getElementById("subtotal");
+        const taxElem = document.getElementById("tax");
+        const discountElem = document.getElementById("discount");
+        const totalElem = document.getElementById("total");
+
+        // Render cart items
+        function renderCart() {
+            cartItemsContainer.innerHTML = ""; // Clear existing items
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+            } else {
+                cart.forEach((item, index) => {
+                    const itemSubtotal = item.price * item.quantity;
+                    subtotal += itemSubtotal;
+
+                    const productHTML = `
+                        <div class="product">
+                            <img src="${item.image}" alt="${item.name}">
+                            <h3>${item.name}</h3>
+                            <p>${item.description}</p>
+                            <p>Price: $${item.price.toFixed(2)}</p>
+                            <p>Quantity: <input type="number" value="${item.quantity}" readonly></p>
+                            <p>Sub-Total: $${itemSubtotal.toFixed(2)}</p>
+                            <button class="remove-item" data-index="${index}">Remove</button>
+                        </div>
+                    `;
+                    cartItemsContainer.innerHTML += productHTML;
+                });
+            }
+
+            // Calculate totals
+            const tax = subtotal * 0.05; // 5% tax
+            const discount = subtotal > 15000 ? subtotal * 0.15 : 0; // 15% discount if subtotal > 15000
+            const total = subtotal + tax - discount;
+
+            // Update totals in the DOM
+            subtotalElem.textContent = subtotal.toFixed(2);
+            taxElem.textContent = tax.toFixed(2);
+            discountElem.textContent = discount.toFixed(2);
+            totalElem.textContent = total.toFixed(2);
+
+            // Add event listeners for quantity changes and item removal
+            addEventListeners();
+        }
+
+        // Add event listeners for quantity inputs and remove buttons
+        function addEventListeners() {
+            document.querySelectorAll(".quantity-input").forEach((input) => {
+                input.addEventListener("change", function () {
+                    const index = this.getAttribute("data-index");
+                    const newQuantity = parseInt(this.value);
+
+                    if (newQuantity > 0) {
+                        cart[index].quantity = newQuantity;
+                        sessionStorage.setItem("cart", JSON.stringify(cart));
+                        renderCart();
+                    } else {
+                        alert("Quantity must be at least 1.");
+                        this.value = cart[index].quantity; // Reset to previous value
+                    }
+                });
+            });
+
+            document.querySelectorAll(".remove-item").forEach((button) => {
+                button.addEventListener("click", function () {
+                    const index = this.getAttribute("data-index");
+                    cart.splice(index, 1); // Remove item from cart
+                    sessionStorage.setItem("cart", JSON.stringify(cart));
+                    renderCart();
+                });
+            });
+        }
+
+        // Clear all items from the cart
+        document.getElementById("clear-cart").addEventListener("click", function () {
+            sessionStorage.removeItem("cart");
+            alert("Cart cleared.");
+            renderCart();
+        });
+
+        // Redirect to checkout page
+        document.getElementById("checkout").addEventListener("click", function () {
+            if (cart.length === 0) {
+                alert("Your cart is empty. Add items before checking out.");
+            } else {
+                window.location.href = "checkout.html"; // Redirect to checkout page
+            }
+        });
+
+        // Close the cart and return to the products page
+        document.getElementById("close-cart").addEventListener("click", function () {
+            window.location.href = "products-group.html"; // Redirect to products page
+        });
+
+        // Initial render
+        renderCart();
+    });
+    </script>
+</body>
+</html>
