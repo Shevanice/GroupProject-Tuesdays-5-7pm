@@ -69,8 +69,8 @@
             }
 
             // Calculate totals
-            const tax = subtotal * 0.05; // 5% tax
-            const discount = subtotal > 15000 ? subtotal * 0.15 : 0; // 15% discount if subtotal > 15000
+            const tax = subtotal * 0.05;
+            const discount = subtotal > 15000 ? subtotal * 0.15 : 0;
             const total = subtotal + tax - discount;
 
             // Update totals in the DOM
@@ -123,13 +123,13 @@
             if (cart.length === 0) {
                 alert("Your cart is empty. Add items before checking out.");
             } else {
-                window.location.href = "checkout.html"; // Redirect to checkout page
+                window.location.href = "checkout.html";
             }
         });
 
         // Close the cart and return to the products page
         document.getElementById("close-cart").addEventListener("click", function () {
-            window.location.href = "products-group.html"; // Redirect to products page
+            window.location.href = "products.html";
         });
 
         // Initial render
