@@ -18,7 +18,7 @@
 
         <!-- BUTTONS -->
         <div class="buttons">
-            <button type="submit" id="cartBtn">Add to Cart</button>
+            <button type="button" id="cartBtn">View Cart</button>
             <button type="button" id="exitBtn" onclick="window.close()">Exit</button>
         </div>
     </form>
@@ -112,76 +112,60 @@
         ];
 
         const productListContainer = document.getElementById("product-list");
+        
+        let cart = JSON.parse(sessionStorage.getItem("cart")) || []; // Retrieve cart from sessionStorage or initialize as empty
 
         function renderProducts() {
             productListContainer.innerHTML = ""; // Clear existing content
             productCatalog.forEach((product) => {
                 const productHTML = `
-                    <div class="container">
-                        <div class="product">
-                            <img src="${product.image}" alt="${product.name}">
-                            <h3>${product.name}</h3>
-                            <p>${product.description}</p>
-                            <p>$${product.price.toFixed(2)}</p>
-                            <label>
-                                <input type="checkbox" name="product" value="${product.name}" id="${product.name}" ${product.quantity === 0 ? "disabled" : ""}>
-                                ${product.quantity === 0 ? "Out of Stock" : "Select Product"}
-                            </label>
-                        </div>
+                    <div class="product">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p>$${product.price.toFixed(2)}</p>
+                        <button 
+                            type="button" 
+                            class="add-to-cart-btn" 
+                            data-product-name="${product.name}" 
+                            ${product.quantity === 0 ? "disabled" : ""}>
+                            ${product.quantity === 0 ? "Out of Stock" : "Add to Cart"}
+                        </button>
                     </div>
                 `;
                 productListContainer.innerHTML += productHTML;
             });
-        }
-renderProducts();
 
-        localStorage.setItem("AllProducts", JSON.stringify(productCatalog));
+            // Add event listeners to "Add to Cart" buttons
+            document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
+                button.addEventListener("click", function () {
+                    const productName = this.getAttribute("data-product-name");
+                    const product = productCatalog.find((item) => item.name === productName);
 
-        function updateStockDisplay() {
-            productCatalog.forEach((product) => {
-                const checkbox = document.getElementById(product.name);
-                if (checkbox) {
-                    checkbox.disabled = product.quantity === 0;
-                    checkbox.nextSibling.textContent = product.quantity === 0 ? "Out of Stock" : "Select Product";
-                }
+                    if (product && product.quantity > 0) {
+                        cart.push(product); // Add product to cart
+                        product.quantity--; // Decrease stock
+                        sessionStorage.setItem("cart", JSON.stringify(cart)); // Save cart to sessionStorage
+                        alert(`${product.name} added to cart!`);
+                        renderProducts(); // Re-render products to reflect stock changes
+                    } else {
+                        alert(`${product.name} is out of stock.`);
+                    }
+                });
             });
         }
 
-        document.getElementById('cartBtn').addEventListener('click', function (event) {
-        event.preventDefault();
+        renderProducts();
 
-        // Collect selected checkboxes
-        const checkboxes = document.querySelectorAll('input[name="product"]:checked');
-        let selectedProducts = [];
-
-        checkboxes.forEach(function (checkbox) {
-            const product = productCatalog.find(item => item.name == checkbox.value);
-            if (product && product.quantity > 0){
-                selectedProducts.push(product);
-                product.quantity--;
-            }
-            else{
-                alert("{product.name} is out of stock.");
-            }
+        // Handle "View Cart" button click
+        document.getElementById("cartBtn").addEventListener("click", function () {
+            window.location.href = "cart.html"; // Redirect to cart.html
         });
 
-        if (selectedProducts.length > 0) {
-            sessionStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
-            sessionStorage.setItem("updatedStock", JSON.stringify(productCatalog));
-            renderProducts(); // Re-render products to reflect stock changes
-            updateStockDisplay();
-            window.location.href = "cart.html";
-        } 
-        else {
-            window.location.href = "cart.html";
-        }
-});
-
-    document.getElementById('exitBtn').addEventListener('click', function () {
-        window.location.pathname = 'AboutUs.html';
-    });
-        updateStockDisplay();
-
+        // Handle "Exit" button click
+        document.getElementById("exitBtn").addEventListener("click", function () {
+            window.location.href = "About Us/AboutUs.html"; // Redirect to About Us page
+        });
       </script>
       
 </body>
