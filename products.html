@@ -137,14 +137,21 @@
             });
 
             // Add event listeners to "Add to Cart" buttons
-            document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
+           document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
                 button.addEventListener("click", function () {
                     const productName = this.getAttribute("data-product-name");
                     const product = productCatalog.find((item) => item.name === productName);
 
                     if (product && product.quantity > 0) {
-                        cart.push(product); // Add product to cart
-                        product.quantity--; // Decrease stock
+                        // Check if the product is already in the cart
+                        const cartItem = cart.find((item) => item.name === productName);
+                        if (cartItem) {
+                            cartItem.quantity++; // Increase quantity in cart
+                        } else {
+                            const productToAdd = { ...product, quantity: 1 }; // Add product to cart with quantity 1
+                            cart.push(productToAdd);
+                        }
+                        product.quantity--; // Decrease stock in product catalog
                         sessionStorage.setItem("cart", JSON.stringify(cart)); // Save cart to sessionStorage
                         alert(`${product.name} added to cart!`);
                         renderProducts(); // Re-render products to reflect stock changes
