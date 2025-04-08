@@ -7,172 +7,150 @@
     <title>Product Page</title>
 </head>
 <body>
+    <!-- HEADER SECTION -->
     <h1>Products/Services</h1>
 
     <h2>Welcome!</h2>
 
+    <!-- FORM SECTION -->
     <form action="invoice.html" method="post">
-        <div class="container">
-            <h2>SKIN ENHANCEMENT PRODUCTS</h2>
-            <div class="product">
-                <img src="Aloe&Me.webp" alt="Aloe">
-                <h3>Aloe&Me</h3>
-                <p>Great skin enhancement natural product set for acne and black spots. Great product to enhance skin texture and tone.</p>
-                <p>$7,000.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Aloe" id="Aloe"> Select Product
-                </label>
-            </div>
+        <div id="product-list"></div>
 
-            <div class="product">
-                <img src="Alumier.webp" alt="Alumier">
-                <h3>Alumier</h3>
-                <p>Alumier is a great product for soft glowing skin. This set allows pores to close and enhance the tone giving it a refine young look.</p>
-                <p>$7,000.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Alumier" id="Alumier"> Select Product
-                </label>
-            </div>
-
-            <div class="product">
-                <img src="Face Mist.webp" alt="Face">
-                <h3>Face Mist</h3>
-                <p>Face Mist is a great product to reduce dry skin. This is used to reduce cracks and allows skin to becomes smoothe and clear.</p>
-                <p>$2,000.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Face" id="Face"> Select Product
-                </label>
-            </div>
-
-            <div class="product">
-                <img src="Gatineau.webp" alt="Gatineau">
-                <h3>Gatineau</h3>
-                <p>Gatineau is a French based product that Moisturize the skin. This product enhance skin glow and has a unique strawberry scent.</p>
-                <p>$3,000.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Gatineau" id="Gatineau"> Select Product
-                </label>
-            </div>
-
-            <div class="product">
-                <img src="Sparkel Wellness.webp" alt="Sparkle">
-                <h3>Sparkle Wellness</h3>
-                <p>Sparkle Wellness is a shower based product that helps to smothen the skin. This product can be used on any area of the body.</p>
-                <p>$5,000.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Sparkle" id="Sparkel"> Select Product
-                </label>
-            </div>
-
-            <div class="product">
-                <img src="OBC Skin.webp" alt="OBC">
-                <h3>OBC Skin</h3>
-                <p>OBC is a facial oil that provides skin glow. It removes dead hairs giving it a soft and prettier glow that is prefrred by many.</p>
-                <p>$1,500.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="OBC" id="OBC"> Select Product
-                </label>
-            </div>
-
-            <h2>HAIR ENHANCEMENT PRODUCTS</h2>
-            <div class="product">
-                <img src="Verb.webp" alt="Verb">
-                <h3>Verb</h3>
-                <p>Verb products are salon based products that is used to enhance the health of hair. It is used to repair breakage or damaged hair.</p>
-                <p>$6,000.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Verb" id="Verb"> Select Product
-                </label>
-            </div>
-
-            <div class="product">
-                <img src="Cantu.jpg" alt="Cantu">
-                <h3>Cantu</h3>
-                <p>Cantu is a hair growth enhancer set that Moisturize and grow the hair. It is for sensitive scalp and it used in natural hair</p>
-                <p>$9,000.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Cantu" id="Cantu"> Select Product
-                </label>
-            </div>
-
-            <div class="product">
-                <img src="Mielle Rosemary Mint.jpg" alt="Mielle">
-                <h3>Mielle Rosemary Mint</h3>
-                <p>Millie Rosemary Mint is a shampoo relaxer set that smoothes and soften's hair. This comprises of shampoo, conditioner, oil, and cream.</p>
-                <p>$11,500.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Mielle" id="Mielle"> Select Product
-                </label>
-            </div>
-
-            <div class="product">
-                <img src="Shea Moisture.jpg" alt="Shea">
-                <h3>Shea Moisture</h3>
-                <p>Shea Moisture is a natural hair set that is produced in Australia. This set helps to treat natural curls for a shiner and smoother look. </p>
-                <p>$8,500.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Shea" id="Shea"> Select Product
-                </label>
-            </div>
-            <div class="product">
-                <img src="Pantene Pro Gold Series.jpg" alt="Pantene">
-                <h3>Pantene Pro Gold Series</h3>
-                <p>Pantene Pro Gold Series is a set that moisturize, detangle, and hydrate hair. This set is great for thick natural hair.</p>
-                <p>$9,500.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Pantene" id="Pantene"> Select Product
-                </label>
-            </div>
-
-            <div class="product">
-                <img src="Sea Mass Fusion.jpg" alt="Sea">
-                <h3>Sea Mass Fusion</h3>
-                <p>Sea Mass Fusion is a conditioer that helps to smoothe hair and give it a shine and refine look. It has that ever lasting touch.</p>
-                <p>$1,200.00</p>
-                <label>
-                    <input type="checkbox" name="product" value="Sea" id="Sea"> Select Product
-                </label>
-            </div>
-        </div>
-        
+        <!-- BUTTONS -->
         <div class="buttons">
-            <button type="submit" id="checkoutBtn">CheckOut</button>
-            <button type="reset">Cancel</button>
+            <button type="submit" id="cartBtn">Add to Cart</button>
             <button type="button" id="exitBtn" onclick="window.close()">Exit</button>
         </div>
     </form>
 
+    <!-- JS SECTION -->
     <script>
-         
         const productCatalog = [
-            { name: "Aloe", price: 7000, quantity: 7 },
-            { name: "Alumier", price: 7000, quantity: 7 },
-            { name: "Face", price: 2000, quantity: 10 },
-            { name: "Gatineau", price: 3000, quantity: 15 },
-            { name: "Sparkle", price: 5000, quantity: 9 },
-            { name: "OBC", price: 1500, quantity: 8 },
-            { name: "Verb", price: 6000, quantity: 7 },
-            { name: "Cantu", price: 9000, quantity: 11},
-            { name: "Mielle", price: 11500, quantity: 2 },
-            { name: "Shea", price: 8500, quantity: 6},
-            { name: "Pantene", price: 9500, quantity: 5 },
-            { name: "Sea", price: 1200, quantity: 4 }
+            { 
+                name: "Aloe", 
+                price: 7000, 
+                quantity: 5,
+                description: "Great skin enhancement natural product set for acne and black spots. Great product to enhance skin texture and tone.", 
+                image: "/Images/Aloe&Me.webp"
+            },
+            { 
+                name: "Alumier", 
+                price: 7000, 
+                quantity: 5,
+                description: "Alumier is a great product for soft glowing skin. This set allows pores to close and enhance the tone giving it a refine young look.", 
+                image: "/Images/Alumier.webp"
+            },
+            { 
+                name: "Face", 
+                price: 2000, 
+                quantity: 5,
+                description: "Face Mist is a great product to reduce dry skin. This is used to reduce cracks and allows skin to becomes smoothe and clear.", 
+                image: "/Images/Face Mist.webp" 
+            },
+            { 
+                name: "Gatineau", 
+                price: 3000, 
+                quantity: 5,
+                description: "Gatineau is a French based product that Moisturize the skin. This product enhance skin glow and has a unique strawberry scent.", 
+                image: "/Images/Gatineau.webp" 
+            },
+            { 
+                name: "Sparkle", 
+                price: 5000, 
+                quantity: 5,
+                description: "Sparkle Wellness is a shower based product that helps to smothen the skin. This product can be used on any area of the body.", 
+                image: "/Images/Sparkel Wellness.webp" 
+            },
+            { 
+                name: "OBC", price: 1500, 
+                quantity: 5,
+                description: "OBC is a facial oil that provides skin glow. It removes dead hairs giving it a soft and prettier glow that is prefrred by many.", 
+                image: "/Images/OBC Skin.webp"
+            },
+            { 
+                name: "Verb", 
+                price: 6000, 
+                quantity: 5,
+                description: "Verb products are salon based products that is used to enhance the health of hair. It is used to repair breakage or damaged hair.", 
+                image: "/Images/Verb.webp"
+            },
+            { 
+                name: "Cantu", 
+                price: 9000, 
+                quantity: 5,
+                description: "Cantu is a hair growth enhancer set that Moisturize and grow the hair. It is for sensitive scalp and it used in natural hair", 
+                image: "/Images/Cantu.jpg"
+            },
+            { 
+                name: "Mielle", 
+                price: 11500, 
+                quantity: 5,
+                description:"Millie Rosemary Mint is a shampoo relaxer set that smoothes and soften's hair. This comprises of shampoo, conditioner, oil, and cream.", 
+                image: "/Images/Mielle Rosemary Mint.jpg" 
+            },
+            { 
+                name: "Shea", 
+                price: 8500, 
+                quantity: 5,
+                description:"Shea Moisture is a natural hair set that is produced in Australia. This set helps to treat natural curls for a shiner and smoother look.", 
+                image: "/Images/Shea Moisture.jpg" 
+            },
+            { 
+                name: "Pantene", 
+                price: 9500, 
+                quantity: 5,    
+                description:"Pantene Pro Gold Series is a set that moisturize, detangle, and hydrate hair. This set is great for thick natural hair.", 
+                image: "/Images/Pantene Pro Gold Series.jpg"
+            },
+            { 
+                name: "Sea", 
+                price: 1200, 
+                quantity: 5,
+                description:"Sea Mass Fusion is a conditioer that helps to smoothe hair and give it a shine and refine look. It has that ever lasting touch.", 
+                image: "/Images/Sea Mass Fusion.jpg" 
+            }
         ];
 
+        const productListContainer = document.getElementById("product-list");
+
+        function renderProducts() {
+            productListContainer.innerHTML = ""; // Clear existing content
+            productCatalog.forEach((product) => {
+                const productHTML = `
+                    <div class="container">
+                        <div class="product">
+                            <img src="${product.image}" alt="${product.name}">
+                            <h3>${product.name}</h3>
+                            <p>${product.description}</p>
+                            <p>$${product.price.toFixed(2)}</p>
+                            <label>
+                                <input type="checkbox" name="product" value="${product.name}" id="${product.name}" ${product.quantity === 0 ? "disabled" : ""}>
+                                ${product.quantity === 0 ? "Out of Stock" : "Select Product"}
+                            </label>
+                        </div>
+                    </div>
+                `;
+                productListContainer.innerHTML += productHTML;
+            });
+        }
+renderProducts();
+
+        localStorage.setItem("AllProducts", JSON.stringify(productCatalog));
+
         function updateStockDisplay() {
-            productCatalog.forEach(product => {
-                const stockElement = document.getElementById(`stock-${product.name}`);
-                if (stockElement) {
-                    stockElement.textContent = product.quantity;
-                    document.getElementById(product.name).disabled = product.quantity === 0;
+            productCatalog.forEach((product) => {
+                const checkbox = document.getElementById(product.name);
+                if (checkbox) {
+                    checkbox.disabled = product.quantity === 0;
+                    checkbox.nextSibling.textContent = product.quantity === 0 ? "Out of Stock" : "Select Product";
                 }
             });
         }
 
-        document.getElementById('checkoutBtn').addEventListener('click', function (event) {
+        document.getElementById('cartBtn').addEventListener('click', function (event) {
         event.preventDefault();
 
-        
+        // Collect selected checkboxes
         const checkboxes = document.querySelectorAll('input[name="product"]:checked');
         let selectedProducts = [];
 
@@ -183,22 +161,24 @@
                 product.quantity--;
             }
             else{
-                alert("This product is out of stock.");
+                alert("{product.name} is out of stock.");
             }
         });
 
         if (selectedProducts.length > 0) {
-            
-            sessionStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
-            sessionStorage.setItem('updatedStock', JSON.stringify(productCatalog));
-            window.location.href = 'invoice.html';
-        } else {
-            alert("Please select at least one product to proceed.");
+            sessionStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+            sessionStorage.setItem("updatedStock", JSON.stringify(productCatalog));
+            renderProducts(); // Re-render products to reflect stock changes
+            updateStockDisplay();
+            window.location.href = "cart.html";
+        } 
+        else {
+            window.location.href = "cart.html";
         }
-        updateStockDisplay();
-    });
+});
+
     document.getElementById('exitBtn').addEventListener('click', function () {
-        window.location.href = 'index.html';
+        window.location.pathname = 'About Us/AboutUs.html';
     });
         updateStockDisplay();
 
