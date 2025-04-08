@@ -79,12 +79,6 @@ form {
   margin-bottom: 15px;
   line-height: 1.6;
 }
-.product label {
-  font-size: 1rem;
-  display: block;
-  margin-top: 10px;
-  color: rgb(56, 56, 142);
-}
 .product:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -106,15 +100,16 @@ button {
   transition: all 0.3s ease;
   margin: 0 10px;
 }
-button[type="submit"] {
+#cartBtn{
   background: #08992a;
   color: #fff;
 }
-button[type="reset"] {
-  background: #f4b400;
+.add-to-cart-btn{
+  background:rgb(56, 56, 142);
   color: #fff;
+  padding: 10px;
 }
-button[type="button"] {
+#exitBtn{
   background: #d9534f;
   color: #fff;
 }
