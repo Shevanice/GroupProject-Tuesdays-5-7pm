@@ -1,10 +1,9 @@
-
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-  body {
+  body{
     font-family: 'Poppins', sans-serif;
     background-color: #ffffff;
     color: #333;
@@ -14,9 +13,8 @@
     padding: 2rem;
     min-height: 100vh;
   }
-  
   /* HEADER */
-  h1 {
+  h1{
     background: #08992a;
     color: white;
     padding: 20px;
@@ -25,71 +23,71 @@
     max-width: 1200px;
     border-radius: 8px;
   }
-  h2 {
+  h2{
     color: #4A4A4A;
     margin-top: 2%;
     margin-bottom: 1.5rem;
     text-align: center;
   }
-  
   /* FORM SECTION */
-  form {
+  form{
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
   }
   
   /* CONTAINER GRID STYLING */
-  .container {
+  .container{
     display: flex;
     justify-content: center;
     width: 100%;
   }
-  #cart-items {
+  #cart-items{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 30px;
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  
-  /* PRODUCT CARD */
-  .product {
+  /* PRODUCT CARD (within cart) */
+  .product{
     background: #fff;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    width: 100%;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .product img {
+  .product:hover{
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  .product img{
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-bottom: 15px;
   }
-  .product h3 {
-    font-size: 1.5rem;
-    color: #333;
+  .product h3{
+    font-size: 1.4rem;
+    color: #222;
     margin-bottom: 10px;
   }
-  .product p {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-    line-height: 1.6;
+  .product p{
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 12px;
+    line-height: 1.5;
   }
-  .product:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
   /* BUTTON SECTION */
-  .buttons {
+  .buttons{
     margin-top: 30px;
     text-align: center;
   }
-  button {
+  button{
     padding: 12px 25px;
     font-size: 1rem;
     font-weight: bold;
@@ -100,15 +98,15 @@
     transition: all 0.3s ease;
     margin: 0 10px;
   }
-  .checkout {
+  .checkout{
     background: #08992a;
     color: #fff;
   }
-  .clear-cart {
+  .clear-cart{
     background: #f4b400;
     color: #fff;
   }
-  .close-cart {
+  .close-cart{
     background: #d9534f;
     color: #fff;
   }
@@ -117,7 +115,7 @@
     color: #fff;
   padding: 10px;
   }
-  button:hover {
+  button:hover{
     transform: scale(1.05);
     opacity: 0.9;
   }
