@@ -23,7 +23,7 @@ h1 {
 }
 
 /* Main Section Styling */
-.receipt {
+.main {
     flex: 1;
     padding: 2rem;
     max-width: 800px;
