@@ -122,20 +122,18 @@
 
 <script>
 
-const RegisterData = JSON.parse(localStorage.getItem('RegisterData')) || [];
-
-
 function ShowUserFrequency() {
+    const registrationData = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+
     let maleCount = 0, femaleCount = 0, otherCount = 0;
     let age18_25 = 0, age26_35 = 0, age36_50 = 0, age50plus = 0;
 
-    RegisterData.forEach(user => {
-       
-        if (user.gender === 'Male') maleCount++;
-        else if (user.gender === 'Female') femaleCount++;
+    registrationData.forEach(user => {
+        const gender = user.gender.toLowerCase();
+        if (gender === "male") maleCount++;
+        else if (gender === "female") femaleCount++;
         else otherCount++;
 
-        
         const age = user.age;
         if (age >= 18 && age <= 25) age18_25++;
         else if (age >= 26 && age <= 35) age26_35++;
@@ -143,52 +141,15 @@ function ShowUserFrequency() {
         else if (age > 50) age50plus++;
     });
 
-    
-    document.getElementById('maleCount').textContent = maleCount;
-    document.getElementById('femaleCount').textContent = femaleCount;
-    document.getElementById('otherCount').textContent = otherCount;
-    document.getElementById('age18_25').textContent = age18_25;
-    document.getElementById('age26_35').textContent = age26_35;
-    document.getElementById('age36_50').textContent = age36_50;
-    document.getElementById('age50plus').textContent = age50plus;
+    document.getElementById("maleCount").textContent = maleCount;
+    document.getElementById("femaleCount").textContent = femaleCount;
+    document.getElementById("otherCount").textContent = otherCount;
+    document.getElementById("age18_25").textContent = age18_25;
+    document.getElementById("age26_35").textContent = age26_35;
+    document.getElementById("age36_50").textContent = age36_50;
+    document.getElementById("age50plus").textContent = age50plus;
 }
 
-
-function ShowInvoices() {
-    const searchTerm = document.getElementById('invoiceSearch').value;
-    const allInvoices = JSON.parse(localStorage.getItem('AllInvoices')) || [];
-    const filteredInvoices = allInvoices.filter(invoice => invoice.trn.includes(searchTerm));
-
-    const tableBody = document.querySelector('#invoiceTable tbody');
-    tableBody.innerHTML = '';
-    filteredInvoices.forEach(invoice => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${invoice.id}</td><td>${invoice.trn}</td><td>${invoice.totalAmount}</td>`;
-        tableBody.appendChild(row);
-    });
-
-    document.getElementById('searchResult').textContent = filteredInvoices.length ? '' : 'No invoices found';
-}
-
-
-function GetUserInvoices() {
-    const userTRN = document.getElementById('userTRN').value;
-    const allInvoices = JSON.parse(localStorage.getItem('AllInvoices')) || [];
-    const userInvoices = allInvoices.filter(invoice => invoice.trn === userTRN);
-
-    const tableBody = document.querySelector('#userInvoiceTable tbody');
-    tableBody.innerHTML = '';
-    userInvoices.forEach(invoice => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${invoice.id}</td><td>${invoice.totalAmount}</td>`;
-        tableBody.appendChild(row);
-    });
-}
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    ShowUserFrequency();
-});
 </script>
 
 </body>
