@@ -150,7 +150,38 @@ function ShowUserFrequency() {
     document.getElementById("age50plus").textContent = age50plus;
 }
 
-document.addEventListener("DOMContentLoaded", ShowUserFrequency);
+ function ShowInvoices() {
+    const registrationData = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+    const invoiceTable = document.getElementById("invoiceTable").getElementsByTagName("tbody")[0];
+    const searchInput = document.getElementById("invoiceSearch").value.trim();
+
+    invoiceTable.innerHTML = "";
+
+     registrationData.forEach(user => {
+      if (!user.invoices || user.invoices.length === 0) return;
+
+         if (searchInput && user.trn !== searchInput) return;
+
+      user.invoices.forEach(invoice => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${invoice.id || "INV-" + Math.floor(Math.random() * 100000)}</td>
+          <td>${user.trn}</td>
+          <td>${invoice.total || 0}</td>
+        `;
+
+        invoiceTable.appendChild(row);
+
+          console.log(`Invoice Found for TRN ${user.trn}:`, invoice);
+      });
+    });
+  }
+
+document.addEventListener("DOMContentLoaded", () => {
+    ShowUserFrequency();
+    ShowInvoices();
+  });
     
 </script>
 
