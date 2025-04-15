@@ -57,9 +57,9 @@
       }
 
       // Get references to HTML elements for displaying invoice details
-      document.getElementById("companyName").textContent = "Skin & Hair Essentials";
-      document.getElementById("invoiceDate").textContent = new Date().toLocaleDateString();
-      document.getElementById("invoiceNumber").textContent = checkoutData.invoiceId || `INV-${Date.now()}`;
+     document.getElementById("companyName").textContent = checkoutData.company || "Skin & Hair Essentials";
+document.getElementById("invoiceDate").textContent = checkoutData.date || new Date().toLocaleDateString();
+document.getElementById("invoiceNumber").textContent = checkoutData.invoiceId || `INV-${Date.now()}`;
       const trnElem = document.getElementById("trn");
 let userTRN = sessionStorage.getItem('trn');
 if (!userTRN) {
