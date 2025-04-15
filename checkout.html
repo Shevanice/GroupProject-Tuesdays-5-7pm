@@ -148,7 +148,11 @@
             total: total.toFixed(2),
             tax: tax.toFixed(2),
             discount: discount.toFixed(2),
-            cart
+            cart,
+          invoiceId: `INV-${Date.now()}`,
+    trn: userTRN,
+    date: new Date().toLocaleDateString(),
+    company: "Skin & Hair Essentials"
         };
 
         sessionStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
