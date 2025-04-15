@@ -41,7 +41,7 @@
 
     <div class="buttons">
       <button type="reset">Cancel</button>
-      <button type="button" id="exitBtn" onclick="window.close()">Exit</button>
+      <button type="button" id="exitBtn">Exit</button>
     </div>
   </section>
 
@@ -59,48 +59,32 @@
       const discountElem = document.getElementById('discount');
       const totalElem = document.getElementById('total');
 
-      // Set the company name
-      companyNameElem.textContent = "Skin & Hair Essentials";
+      // Retrieve the invoice from localStorage (only one, generated from checkout)
+      const invoice = JSON.parse(localStorage.getItem('CheckoutInvoice'));
 
-      // Set the current date for the invoice
-      const currentDate = new Date();
-      invoiceDateElem.textContent = currentDate.toLocaleDateString();
-
-      // Generate a unique invoice number using the current timestamp
-      const uniqueInvoiceNumber = `INV-${Date.now()}`;
-      invoiceNumberElem.textContent = uniqueInvoiceNumber;
-
-      // Retrieve the TRN entered by the user from sessionStorage or generate one
-      let userTRN = sessionStorage.getItem('userTRN');
-      if (!userTRN) {
-        // Generate a random 9-digit TRN if none is provided
-        userTRN = Math.floor(100000000 + Math.random() * 900000000).toString();
-        sessionStorage.setItem('userTRN', userTRN); // Save the generated TRN for future use
+      if (!invoice) {
+        alert("No invoice to display. Redirecting...");
+        window.location.href = "checkout.html";
+        return;
       }
-      trnElem.textContent = userTRN;
 
-      // Retrieve shipping information from sessionStorage or use a default message
-      const shippingInfo = sessionStorage.getItem('shippingInfo') || "No shipping information provided.";
-      shippingInfoElem.textContent = shippingInfo;
+      // Set the invoice details using data from the stored invoice
+      companyNameElem.textContent = invoice.companyName || "Skin & Hair Essentials";
+      invoiceDateElem.textContent = invoice.date || new Date().toLocaleDateString();
+      invoiceNumberElem.textContent = invoice.invoiceNumber || `INV-${Date.now()}`;
+      trnElem.textContent = invoice.trn;
+      shippingInfoElem.textContent = invoice.shippingInfo;
 
-      // Initialize subtotal to calculate the total cost of products
+      // Initialize subtotal display
       let subtotal = 0;
 
-      // Retrieve selected products from sessionStorage
-      const storedProducts = sessionStorage.getItem('selectedProducts');
-      let selectedProducts = storedProducts ? JSON.parse(storedProducts) : [];
-
-      // Check if there are any selected products
-      if (selectedProducts.length === 0) {
-        // Display a message if no products are selected
-        productListElem.innerHTML = '<tr><td colspan="4">No products selected.</td></tr>';
-      } else {
-        // Loop through the selected products and display them in the table
-        selectedProducts.forEach(product => {
+      // Loop through the products and display them in the table
+      if (invoice.products && invoice.products.length > 0) {
+        invoice.products.forEach(product => {
           const row = document.createElement('tr');
-          const productTotal = product.price * product.quantity; // Calculate total for each product
-          subtotal += productTotal; // Add to subtotal
-          row.innerHTML = ` 
+          const productTotal = product.price * product.quantity;
+          subtotal += productTotal;
+          row.innerHTML = `
             <td>${product.name}</td>
             <td>${product.price.toFixed(2)}</td>
             <td>${product.quantity}</td>
@@ -108,18 +92,15 @@
           `;
           productListElem.appendChild(row);
         });
+      } else {
+        productListElem.innerHTML = '<tr><td colspan="4">No products selected.</td></tr>';
       }
 
-      // Calculate tax, discount, and total
-      const tax = subtotal * 0.05; // 5% tax
-      const discount = subtotal > 15000 ? subtotal * 0.15 : 0; // 15% discount if subtotal > 15000
-      const total = subtotal + tax - discount;
-
-      // Update the totals in the HTML
-      subtotalElem.textContent = subtotal.toFixed(2);
-      taxElem.textContent = tax.toFixed(2);
-      discountElem.textContent = discount.toFixed(2);
-      totalElem.textContent = total.toFixed(2);
+      // Display the calculated totals
+      subtotalElem.textContent = invoice.subtotal.toFixed(2);
+      taxElem.textContent = invoice.tax.toFixed(2);
+      discountElem.textContent = invoice.discount.toFixed(2);
+      totalElem.textContent = invoice.total.toFixed(2);
 
       // Event listener for the "Cancel" button
       document.querySelector('button[type="reset"]').addEventListener('click', function () {
@@ -127,58 +108,27 @@
         let updatedStock = JSON.parse(sessionStorage.getItem('updatedStock')) || [];
 
         // Restore stock quantities for canceled products
-        selectedProducts.forEach(product => {
+        invoice.products.forEach(product => {
           let stockItem = updatedStock.find(item => item.name === product.name);
           if (stockItem) {
             stockItem.quantity += product.quantity; // Increment stock quantity
           }
         });
 
-        // Save updated stock back to sessionStorage
+        // Save updated stock and restore the cart
         sessionStorage.setItem('updatedStock', JSON.stringify(updatedStock));
-        sessionStorage.removeItem('selectedProducts'); // Clear selected products
-        alert("Order canceled."); // Notify the user
-        window.location.href = 'products.html'; // Redirect to products page
+        sessionStorage.setItem('selectedProducts', JSON.stringify(invoice.products));
+        alert("Order canceled and items restored to your cart.");
+        window.location.href = 'cart.html';
       });
 
       // Event listener for the "Exit" button
       document.getElementById('exitBtn').addEventListener('click', function () {
-        sessionStorage.removeItem('selectedProducts'); // Clear selected products (cart)
-        window.location.href = 'products.html'; // Redirect to products page
+        sessionStorage.removeItem('selectedProducts'); // Clear cart
+        localStorage.removeItem('CheckoutInvoice'); // Remove the current invoice
+        alert("Exiting invoice. Cart cleared.");
+        window.location.href = 'products.html'; // Redirect
       });
-
-      // Create the invoice object with all details
-      const invoice = {
-        companyName: companyNameElem.textContent,
-        date: invoiceDateElem.textContent,
-        invoiceNumber: invoiceNumberElem.textContent,
-        trn: userTRN,
-        shippingInfo: shippingInfoElem.textContent,
-        products: selectedProducts,
-        subtotal: parseFloat(subtotalElem.textContent),
-        tax: parseFloat(taxElem.textContent),
-        discount: parseFloat(discountElem.textContent),
-        total: parseFloat(totalElem.textContent)
-      };
-
-      // Retrieve existing invoices from localStorage
-      const allInvoices = JSON.parse(localStorage.getItem('AllInvoices')) || [];
-
-      // Append the new invoice to the array
-      allInvoices.push(invoice);
-
-      // Store the updated array back in localStorage
-      localStorage.setItem('AllInvoices', JSON.stringify(allInvoices));
-
-      // Store the latest invoice separately for checkout.html
-      localStorage.setItem('CheckoutInvoice', JSON.stringify(invoice));
-
-      // Clear the cart after successful checkout
-      sessionStorage.removeItem('selectedProducts');
-
-      // Notify the user and redirect to the invoice page
-      // alert("Your invoice has been sent to your email.");
-      window.location.href = 'invoice.html';
     });
   </script>
 </body>
