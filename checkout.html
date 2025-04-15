@@ -153,6 +153,35 @@
 
         sessionStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
 
+const userTRN = sessionStorage.getItem("trn"); // Make sure TRN is saved at login/register
+
+      if (!userTRN) {
+        alert("User TRN not found. Please log in first.");
+        return;
+      }
+
+      let registrationData = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+
+      const userIndex = registrationData.findIndex(user => user.trn === userTRN);
+
+      if (userIndex === -1) {
+        alert("User not found in the system.");
+        return;
+      }
+
+      const invoice = {
+        id: `INV-${Date.now()}`,
+        date: new Date().toLocaleDateString(),
+        total: total.toFixed(2),
+        tax: tax.toFixed(2),
+        discount: discount.toFixed(2),
+        cart: cart
+      };
+
+      registrationData[userIndex].invoices.push(invoice);
+
+      localStorage.setItem("RegistrationData", JSON.stringify(registrationData));
+          
         // Redirect to invoice page
         window.location.href = "invoice.html";
         });
