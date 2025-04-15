@@ -97,116 +97,108 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-        const cartSummary = document.getElementById("cart-summary");
+  document.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    const cartSummary = document.getElementById("cart-summary");
 
-        let subtotal = 0;
+    let subtotal = 0;
 
-        cart.forEach((item) => {
-        const itemTotal = item.price * item.quantity;
-        subtotal += itemTotal;
+    cart.forEach((item) => {
+      const itemTotal = item.price * item.quantity;
+      subtotal += itemTotal;
 
-        cartSummary.innerHTML += `
-            <div class="product">
-            <strong>${item.name}</strong><br>
-            Price: $${item.price.toFixed(2)}<br>
-            Quantity: ${item.quantity}<br>
-            Subtotal: $${itemTotal.toFixed(2)}<br><br>
-            </div>
-        `;
-        });
-
-        const tax = subtotal * 0.05;
-        const discount = subtotal > 15000 ? subtotal * 0.15 : 0;
-        const total = subtotal + tax - discount;
-
-        document.getElementById("totalDisplay").textContent = `Total: ${total.toFixed(2)} JMD`;
-
-const userTRN = sessionStorage.getItem("trn");
-      if (!userTRN) {
-          alert("User TRN not found. Please log in first.");
-          window.location.href = "login.html"; // Redirect to login page
-          return; // Exit early if no TRN is found
-        }
-      
-        document.getElementById("checkoutForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById("name").value.trim();
-        const address = document.getElementById("address").value.trim();
-        const payment = parseFloat(document.getElementById("payment").value);
-
-        if (isNaN(payment)) {
-            alert("Please enter a valid payment amount.");
-            return;
-        }
-
-        if (payment < total) {
-            alert(`Insufficient payment. Total is ${total.toFixed(2)} JMD`);
-            return;
-        }
-
-        // Store checkout details for invoice page
-        const checkoutDetails = {
-            name,
-            address,
-            payment,
-            total: total.toFixed(2),
-            tax: tax.toFixed(2),
-            discount: discount.toFixed(2),
-            cart,
-          invoiceId: `INV-${Date.now()}`,
-    trn: userTRN,
-    date: new Date().toLocaleDateString(),
-    company: "Skin & Hair Essentials"
-        };
-
-        sessionStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
-
-const userTRN = sessionStorage.getItem("trn");
-
-if (!userTRN) {
-  alert("User TRN not found. Please log in first.");
-  return;
-}
-
-let registrationData = JSON.parse(localStorage.getItem("RegistrationData")) || [];
-
-const userIndex = registrationData.findIndex(user => user.trn === userTRN);
-
-if (userIndex === -1) {
-  alert("User not found in the system.");
-  return;
-}
-
-const invoice = {
-  id: `INV-${Date.now()}`,
-  date: new Date().toLocaleDateString(),
-  total: total.toFixed(2),
-  tax: tax.toFixed(2),
-  discount: discount.toFixed(2),
-  cart: cart
-};
-
-
-if (!registrationData[userIndex].invoices) {
-  registrationData[userIndex].invoices = [];
-}
-
-registrationData[userIndex].invoices.push(invoice);
-
-
-localStorage.setItem("RegistrationData", JSON.stringify(registrationData));
-          
-        // Redirect to invoice page
-        window.location.href = "invoice.html";
-        });
-
-        document.getElementById("cancelBtn").addEventListener("click", () => {
-        window.location.href = "cart.html";
-        });
+      cartSummary.innerHTML += `
+        <div class="product">
+          <strong>${item.name}</strong><br>
+          Price: $${item.price.toFixed(2)}<br>
+          Quantity: ${item.quantity}<br>
+          Subtotal: $${itemTotal.toFixed(2)}<br><br>
+        </div>
+      `;
     });
-  </script>
+
+    const tax = subtotal * 0.05;
+    const discount = subtotal > 15000 ? subtotal * 0.15 : 0;
+    const total = subtotal + tax - discount;
+
+    document.getElementById("totalDisplay").textContent = `Total: ${total.toFixed(2)} JMD`;
+
+    // ✅ TRN fetched ONCE here
+    const userTRN = sessionStorage.getItem("trn");
+
+    if (!userTRN) {
+      alert("User TRN not found. Please log in first.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    document.getElementById("checkoutForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const payment = parseFloat(document.getElementById("payment").value);
+
+      if (isNaN(payment)) {
+        alert("Please enter a valid payment amount.");
+        return;
+      }
+
+      if (payment < total) {
+        alert(`Insufficient payment. Total is ${total.toFixed(2)} JMD`);
+        return;
+      }
+
+      const checkoutDetails = {
+        name,
+        address,
+        payment,
+        total: total.toFixed(2),
+        tax: tax.toFixed(2),
+        discount: discount.toFixed(2),
+        cart,
+        invoiceId: `INV-${Date.now()}`,
+        trn: userTRN,
+        date: new Date().toLocaleDateString(),
+        company: "Skin & Hair Essentials"
+      };
+
+      sessionStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
+
+      let registrationData = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+
+      const userIndex = registrationData.findIndex(user => user.trn === userTRN);
+
+      if (userIndex === -1) {
+        alert("User not found in the system.");
+        return;
+      }
+
+      const invoice = {
+        id: `INV-${Date.now()}`,
+        date: new Date().toLocaleDateString(),
+        total: total.toFixed(2),
+        tax: tax.toFixed(2),
+        discount: discount.toFixed(2),
+        cart
+      };
+
+      if (!registrationData[userIndex].invoices) {
+        registrationData[userIndex].invoices = [];
+      }
+
+      registrationData[userIndex].invoices.push(invoice);
+
+      localStorage.setItem("RegistrationData", JSON.stringify(registrationData));
+
+      window.location.href = "invoice.html";
+    });
+
+    document.getElementById("cancelBtn").addEventListener("click", () => {
+      window.location.href = "cart.html";
+    });
+  });
+</script>
+
 </body>
 </html>
