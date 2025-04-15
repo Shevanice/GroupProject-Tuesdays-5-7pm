@@ -1,121 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #e0e0e0;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            display: flex;
-            flex-direction: column;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        label {
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 5px;
-        }
-        input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-        .buttons {
-            display: flex;
-            flex-direction: column;
-        }
-        .buttons button {
-            margin-top: 10px;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        #confirmBtn {
-            background-color: #4CAF50;
-            color: white;
-        }
-        #cancelBtn {
-            background-color: #f44336;
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Checkout</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f8f8f8;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    .cart-summary {
+      line-height: 2;
+        margin-bottom: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      width: 90%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #confirmBtn {
+      background-color: #4CAF50;
+      color: white;
+      width: 30%;
+    }
+
+    #cancelBtn {
+      background-color: #f44336;
+      color: white;
+      margin-right: 7%;
+      width: 30%;
+    }
+
+    #totalDisplay {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Checkout</h1>
-        <form id="checkoutForm">
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
+  <div class="container">
+    <h1>Checkout</h1>
 
-            <label for="address">Shipping Address:</label>
-            <input type="text" id="address" name="address" required>
+    <div id="cart-summary" class="cart-summary"></div>
+    <div id="totalDisplay">Total: 0.00 JMD</div>
 
-            <label for="payment">Amount to be Paid ($):</label>
-            <input type="text" id="payment" name="payment" readonly>
+    <form id="checkoutForm">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" required />
 
-            <div class="buttons">
-                <button type="button" id="confirmBtn">Confirm</button>
-                <button type="button" id="cancelBtn">Cancel</button>
+        <label for="address">Shipping Address:</label>
+        <input type="text" id="address" required />
+
+        <label for="payment">Amount to be Paid ($):</label>
+        <input type="text" id="payment" name="payment">
+
+      <div class="buttons">
+        <button type="submit" id="confirmBtn">Confirm</button>
+        <button type="button" id="cancelBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+        const cartSummary = document.getElementById("cart-summary");
+
+        let subtotal = 0;
+
+        cart.forEach((item) => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+
+        cartSummary.innerHTML += `
+            <div class="product">
+            <strong>${item.name}</strong><br>
+            Price: $${item.price.toFixed(2)}<br>
+            Quantity: ${item.quantity}<br>
+            Subtotal: $${itemTotal.toFixed(2)}<br><br>
             </div>
-        </form>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            
-            let selectedProducts = JSON.parse(sessionStorage.getItem('selectedProducts')) || [];
-
-            
-            let totalAmount = selectedProducts.reduce((sum, product) => sum + product.price, 0);
-
-            
-            document.getElementById("payment").value = totalAmount;
+        `;
         });
 
-        document.getElementById("confirmBtn").addEventListener("click", function () {
-            
-            const name = document.getElementById("name").value;
-            const address = document.getElementById("address").value;
+        const tax = subtotal * 0.05;
+        const discount = subtotal > 15000 ? subtotal * 0.15 : 0;
+        const total = subtotal + tax - discount;
 
-            
-            if (!name || !address) {
-                alert("Please fill in all fields.");
-                return;
-            }
+        document.getElementById("totalDisplay").textContent = `Total: ${total.toFixed(2)} JMD`;
 
-            
-            alert("Order confirmed! Thank you for your purchase.");
+        document.getElementById("checkoutForm").addEventListener("submit", (e) => {
+        e.preventDefault();
 
-            sessionStorage.clear();
+        const name = document.getElementById("name").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const payment = parseFloat(document.getElementById("payment").value);
 
-            window.location.href = 'index.html';
+        if (isNaN(payment)) {
+            alert("Please enter a valid payment amount.");
+            return;
+        }
+
+        if (payment < total) {
+            alert(`Insufficient payment. Total is ${total.toFixed(2)} JMD`);
+            return;
+        }
+
+        // Store checkout details for invoice page
+        const checkoutDetails = {
+            name,
+            address,
+            payment,
+            total: total.toFixed(2),
+            tax: tax.toFixed(2),
+            discount: discount.toFixed(2),
+            cart
+        };
+
+        sessionStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
+
+        // Redirect to invoice page
+        window.location.href = "invoice.html";
         });
 
-        document.getElementById("cancelBtn").addEventListener("click", function () {
-            
-            window.location.href = 'invoice.html';
+        document.getElementById("cancelBtn").addEventListener("click", () => {
+        window.location.href = "cart.html";
         });
-    </script>
+    });
+  </script>
 </body>
 </html>
-
