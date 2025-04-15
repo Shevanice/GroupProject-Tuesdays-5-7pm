@@ -142,18 +142,26 @@
 
         // Store checkout details for invoice page
         const checkoutDetails = {
-            name,
-            address,
-            payment,
-            total: total.toFixed(2),
-            tax: tax.toFixed(2),
-            discount: discount.toFixed(2),
-            cart
+            companyName: "Skin & Hair Essentials",
+            date: new Date().toLocaleDateString(),
+            shippingInfo: `${name}, ${address}`,
+            invoiceNumber: `INV-${Date.now()}`,
+            trn: "123456789",
+            products: cart,
+            subtotal: subtotal,
+            tax: tax,
+            discount: discount,
+            total: total
         };
 
-        sessionStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
-
-        // Redirect to invoice page
+        // save current invoice for invoice.html
+        localStorage.setItem("CheckoutInvoice", JSON.stringify(invoice));
+      
+        // Append to AllInvoices array
+        const allInvoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
+        allInvoices.push(invoice);
+        localStorage.setItem("AllInvoices", JSON.stringify(allInvoices));
+          
         window.location.href = "invoice.html";
         });
 
