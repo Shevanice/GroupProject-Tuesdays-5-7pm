@@ -123,6 +123,13 @@
 
         document.getElementById("totalDisplay").textContent = `Total: ${total.toFixed(2)} JMD`;
 
+const userTRN = sessionStorage.getItem("trn");
+      if (!userTRN) {
+          alert("User TRN not found. Please log in first.");
+          window.location.href = "login.html"; // Redirect to login page
+          return; // Exit early if no TRN is found
+        }
+      
         document.getElementById("checkoutForm").addEventListener("submit", (e) => {
         e.preventDefault();
 
