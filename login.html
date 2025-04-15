@@ -55,6 +55,7 @@
             // This looks in local storage for the TRN and password.
             // Then it checks if the inputs entered match those in storage,
             if (user) {
+                sessionStorage.setItem("trn", user.trn);
                 alert("Login Successful!")
                 window.location.href = "products.html";
             } 
