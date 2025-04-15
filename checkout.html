@@ -153,34 +153,40 @@
 
         sessionStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
 
-const userTRN = sessionStorage.getItem("trn"); // Make sure TRN is saved at login/register
+const userTRN = sessionStorage.getItem("trn");
 
-      if (!userTRN) {
-        alert("User TRN not found. Please log in first.");
-        return;
-      }
+if (!userTRN) {
+  alert("User TRN not found. Please log in first.");
+  return;
+}
 
-      let registrationData = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+let registrationData = JSON.parse(localStorage.getItem("RegistrationData")) || [];
 
-      const userIndex = registrationData.findIndex(user => user.trn === userTRN);
+const userIndex = registrationData.findIndex(user => user.trn === userTRN);
 
-      if (userIndex === -1) {
-        alert("User not found in the system.");
-        return;
-      }
+if (userIndex === -1) {
+  alert("User not found in the system.");
+  return;
+}
 
-      const invoice = {
-        id: `INV-${Date.now()}`,
-        date: new Date().toLocaleDateString(),
-        total: total.toFixed(2),
-        tax: tax.toFixed(2),
-        discount: discount.toFixed(2),
-        cart: cart
-      };
+const invoice = {
+  id: `INV-${Date.now()}`,
+  date: new Date().toLocaleDateString(),
+  total: total.toFixed(2),
+  tax: tax.toFixed(2),
+  discount: discount.toFixed(2),
+  cart: cart
+};
 
-      registrationData[userIndex].invoices.push(invoice);
 
-      localStorage.setItem("RegistrationData", JSON.stringify(registrationData));
+if (!registrationData[userIndex].invoices) {
+  registrationData[userIndex].invoices = [];
+}
+
+registrationData[userIndex].invoices.push(invoice);
+
+
+localStorage.setItem("RegistrationData", JSON.stringify(registrationData));
           
         // Redirect to invoice page
         window.location.href = "invoice.html";
