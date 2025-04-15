@@ -42,147 +42,143 @@
     <div class="buttons">
       <button type="reset">Cancel</button>
       <button type="button" id="exitBtn" onclick="window.close()">Exit</button>
-      <button type="button" id="checkoutBtn">Checkout</button>
     </div>
   </section>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Get references to HTML elements for displaying invoice details
-      const companyNameElem = document.getElementById('companyName');
-      const invoiceDateElem = document.getElementById('invoiceDate');
-      const invoiceNumberElem = document.getElementById('invoiceNumber');
-      const trnElem = document.getElementById('trn');
-      const shippingInfoElem = document.getElementById('shippingInfo');
-      const productListElem = document.getElementById('productList');
-      const subtotalElem = document.getElementById('subtotal');
-      const taxElem = document.getElementById('tax');
-      const discountElem = document.getElementById('discount');
-      const totalElem = document.getElementById('total');
+  // Get references to HTML elements for displaying invoice details
+  const companyNameElem = document.getElementById('companyName');
+  const invoiceDateElem = document.getElementById('invoiceDate');
+  const invoiceNumberElem = document.getElementById('invoiceNumber');
+  const trnElem = document.getElementById('trn');
+  const shippingInfoElem = document.getElementById('shippingInfo');
+  const productListElem = document.getElementById('productList');
+  const subtotalElem = document.getElementById('subtotal');
+  const taxElem = document.getElementById('tax');
+  const discountElem = document.getElementById('discount');
+  const totalElem = document.getElementById('total');
 
-      // Set the company name
-      companyNameElem.textContent = "Skin & Hair Essentials";
+  // Set the company name
+  companyNameElem.textContent = "Skin & Hair Essentials";
 
-      // Set the current date for the invoice
-      const currentDate = new Date();
-      invoiceDateElem.textContent = currentDate.toLocaleDateString();
+  // Set the current date for the invoice
+  const currentDate = new Date();
+  invoiceDateElem.textContent = currentDate.toLocaleDateString();
 
-      // Generate a unique invoice number using the current timestamp
-      const uniqueInvoiceNumber = `INV-${Date.now()}`;
-      invoiceNumberElem.textContent = uniqueInvoiceNumber;
+  // Generate a unique invoice number using the current timestamp
+  const uniqueInvoiceNumber = `INV-${Date.now()}`;
+  invoiceNumberElem.textContent = uniqueInvoiceNumber;
 
-      // Retrieve the TRN entered by the user from sessionStorage or generate one
-      let userTRN = sessionStorage.getItem('userTRN');
-      if (!userTRN) {
-        // Generate a random 9-digit TRN if none is provided
-        userTRN = Math.floor(100000000 + Math.random() * 900000000).toString();
-        sessionStorage.setItem('userTRN', userTRN); // Save the generated TRN for future use
-      }
-      trnElem.textContent = userTRN;
+  // Retrieve the TRN entered by the user from sessionStorage or generate one
+  let userTRN = sessionStorage.getItem('userTRN');
+  if (!userTRN) {
+    // Generate a random 9-digit TRN if none is provided
+    userTRN = Math.floor(100000000 + Math.random() * 900000000).toString();
+    sessionStorage.setItem('userTRN', userTRN); // Save the generated TRN for future use
+  }
+  trnElem.textContent = userTRN;
 
-      // Retrieve shipping information from sessionStorage or use a default message
-      const shippingInfo = sessionStorage.getItem('shippingInfo') || "No shipping information provided.";
-      shippingInfoElem.textContent = shippingInfo;
+  // Retrieve shipping information from sessionStorage or use a default message
+  const shippingInfo = sessionStorage.getItem('shippingInfo') || "No shipping information provided.";
+  shippingInfoElem.textContent = shippingInfo;
 
-      // Initialize subtotal to calculate the total cost of products
-      let subtotal = 0;
+  // Initialize subtotal to calculate the total cost of products
+  let subtotal = 0;
 
-      // Retrieve selected products from sessionStorage
-      const storedProducts = sessionStorage.getItem('selectedProducts');
-      let selectedProducts = storedProducts ? JSON.parse(storedProducts) : [];
+  // Retrieve selected products from sessionStorage
+  const storedProducts = sessionStorage.getItem('selectedProducts');
+  let selectedProducts = storedProducts ? JSON.parse(storedProducts) : [];
 
-      // Check if there are any selected products
-      if (selectedProducts.length === 0) {
-        // Display a message if no products are selected
-        productListElem.innerHTML = '<tr><td colspan="4">No products selected.</td></tr>';
-      } else {
-        // Loop through the selected products and display them in the table
-        selectedProducts.forEach(product => {
-          const row = document.createElement('tr');
-          const productTotal = product.price * product.quantity; // Calculate total for each product
-          subtotal += productTotal; // Add to subtotal
-          row.innerHTML = ` 
-            <td>${product.name}</td>
-            <td>${product.price.toFixed(2)}</td>
-            <td>${product.quantity}</td>
-            <td>${productTotal.toFixed(2)}</td>
-          `;
-          productListElem.appendChild(row);
-        });
-      }
-
-      // Calculate tax, discount, and total
-      const tax = subtotal * 0.05; // 5% tax
-      const discount = subtotal > 15000 ? subtotal * 0.15 : 0; // 15% discount if subtotal > 15000
-      const total = subtotal + tax - discount;
-
-      // Update the totals in the HTML
-      subtotalElem.textContent = subtotal.toFixed(2);
-      taxElem.textContent = tax.toFixed(2);
-      discountElem.textContent = discount.toFixed(2);
-      totalElem.textContent = total.toFixed(2);
-
-      // Event listener for the "Cancel" button
-      document.querySelector('button[type="reset"]').addEventListener('click', function () {
-        // Retrieve updated stock from sessionStorage
-        let updatedStock = JSON.parse(sessionStorage.getItem('updatedStock')) || [];
-
-        // Restore stock quantities for canceled products
-        selectedProducts.forEach(product => {
-          let stockItem = updatedStock.find(item => item.name === product.name);
-          if (stockItem) {
-            stockItem.quantity += product.quantity; // Increment stock quantity
-          }
-        });
-
-        // Save updated stock back to sessionStorage
-        sessionStorage.setItem('updatedStock', JSON.stringify(updatedStock));
-        sessionStorage.removeItem('selectedProducts'); // Clear selected products
-        alert("Order canceled."); // Notify the user
-        window.location.href = 'products.html'; // Redirect to products page
-      });
-
-      // Event listener for the "Exit" button
-      document.getElementById('exitBtn').addEventListener('click', function () {
-        window.location.href = 'products.html'; // Redirect to products page
-      });
-
-      // Event listener for the "Checkout" button
-      document.getElementById("checkoutBtn").addEventListener("click", function () {
-        // Check if there are selected products
-        if (selectedProducts.length === 0) {
-          alert("No products selected for checkout.");
-          return;
-        }
-
-        // Create the invoice object with all details
-        const invoice = {
-          companyName: companyNameElem.textContent,
-          date: invoiceDateElem.textContent,
-          invoiceNumber: invoiceNumberElem.textContent,
-          trn: userTRN,
-          shippingInfo: shippingInfoElem.textContent,
-          products: selectedProducts,
-          subtotal: parseFloat(subtotalElem.textContent),
-          tax: parseFloat(taxElem.textContent),
-          discount: parseFloat(discountElem.textContent),
-          total: parseFloat(totalElem.textContent)
-        };
-
-        // Retrieve existing invoices from localStorage
-        const allInvoices = JSON.parse(localStorage.getItem('AllInvoices')) || [];
-
-        // Append the new invoice to the array
-        allInvoices.push(invoice);
-
-        // Store the updated array back to localStorage
-        localStorage.setItem('AllInvoices', JSON.stringify(allInvoices));
-
-        // Notify the user and redirect to the checkout page
-        alert("Your invoice has been sent to your email and saved.");
-        window.location.href = 'checkout.html';
-      });
+  // Check if there are any selected products
+  if (selectedProducts.length === 0) {
+    // Display a message if no products are selected
+    productListElem.innerHTML = '<tr><td colspan="4">No products selected.</td></tr>';
+  } else {
+    // Loop through the selected products and display them in the table
+    selectedProducts.forEach(product => {
+      const row = document.createElement('tr');
+      const productTotal = product.price * product.quantity; // Calculate total for each product
+      subtotal += productTotal; // Add to subtotal
+      row.innerHTML = ` 
+        <td>${product.name}</td>
+        <td>${product.price.toFixed(2)}</td>
+        <td>${product.quantity}</td>
+        <td>${productTotal.toFixed(2)}</td>
+      `;
+      productListElem.appendChild(row);
     });
+  }
+
+  // Calculate tax, discount, and total
+  const tax = subtotal * 0.05; // 5% tax
+  const discount = subtotal > 15000 ? subtotal * 0.15 : 0; // 15% discount if subtotal > 15000
+  const total = subtotal + tax - discount;
+
+  // Update the totals in the HTML
+  subtotalElem.textContent = subtotal.toFixed(2);
+  taxElem.textContent = tax.toFixed(2);
+  discountElem.textContent = discount.toFixed(2);
+  totalElem.textContent = total.toFixed(2);
+
+  // Event listener for the "Cancel" button
+  document.querySelector('button[type="reset"]').addEventListener('click', function () {
+    // Retrieve updated stock from sessionStorage
+    let updatedStock = JSON.parse(sessionStorage.getItem('updatedStock')) || [];
+
+    // Restore stock quantities for canceled products
+    selectedProducts.forEach(product => {
+      let stockItem = updatedStock.find(item => item.name === product.name);
+      if (stockItem) {
+        stockItem.quantity += product.quantity; // Increment stock quantity
+      }
+    });
+
+    // Save updated stock back to sessionStorage
+    sessionStorage.setItem('updatedStock', JSON.stringify(updatedStock));
+    sessionStorage.removeItem('selectedProducts'); // Clear selected products
+    alert("Order canceled."); // Notify the user
+    window.location.href = 'products.html'; // Redirect to products page
+  });
+
+  // Event listener for the "Exit" button
+  document.getElementById('exitBtn').addEventListener('click', function () {
+    sessionStorage.removeItem('selectedProducts'); // Clear selected products (cart)
+    window.location.href = 'products.html'; // Redirect to products page
+  });
+
+    // Create the invoice object with all details
+    const invoice = {
+      companyName: companyNameElem.textContent,
+      date: invoiceDateElem.textContent,
+      invoiceNumber: invoiceNumberElem.textContent,
+      trn: userTRN,
+      shippingInfo: shippingInfoElem.textContent,
+      products: selectedProducts,
+      subtotal: parseFloat(subtotalElem.textContent),
+      tax: parseFloat(taxElem.textContent),
+      discount: parseFloat(discountElem.textContent),
+      total: parseFloat(totalElem.textContent)
+    };
+
+    // Retrieve existing invoices from localStorage
+    const allInvoices = JSON.parse(localStorage.getItem('AllInvoices')) || [];
+
+    // Append the new invoice to the array
+    allInvoices.push(invoice);
+
+    // Store the updated array back to localStorage
+    localStorage.setItem('AllInvoices', JSON.stringify(allInvoices));
+
+    // Clear the cart after successful checkout
+    sessionStorage.removeItem('selectedProducts');
+
+    // Notify the user and redirect to the checkout page
+    alert("Your invoice has been sent to your email and saved.");
+    window.location.href = 'checkout.html';
+  });
+});
+
   </script>
 </body>
 </html>
