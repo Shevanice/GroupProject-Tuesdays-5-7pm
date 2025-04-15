@@ -67,8 +67,10 @@
       document.getElementById("discount").textContent = checkoutData.discount;
       document.getElementById("total").textContent = checkoutData.total;
 
-      // Retrieve the TRN entered by the user from sessionStorage or generate one
+      // Set the TRN and Shipping Information
       const trnElem = document.getElementById("trn");
+
+      // Retrieve the TRN entered by the user from sessionStorage or generate one
       let userTRN = sessionStorage.getItem('trn');
       if (!userTRN) {
         // Generate a random 9-digit TRN if none is provided
@@ -76,11 +78,6 @@
         sessionStorage.setItem('trn', userTRN); // Save the generated TRN for future use
       }
       trnElem.textContent = userTRN; // Set the TRN in the HTML element
-
-      // Retrieve shipping information from sessionStorage or use a default message
-      const shippingInfoElem = document.getElementById("shippingInfo");
-      const shippingInfo = sessionStorage.getItem('shippingInfo') || "No shipping information provided.";
-      shippingInfoElem.textContent = shippingInfo;
 
 
       // Populate product list
