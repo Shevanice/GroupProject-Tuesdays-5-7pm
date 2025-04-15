@@ -1,4 +1,5 @@
-body{
+/* General Styles */
+body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
@@ -8,51 +9,77 @@ body{
     flex-direction: column;
     min-height: 100vh;
 }
-/* HEADER SECTION */
-h1{
+
+/* Header Styling */
+h1 {
     background: #08992a;
     color: white;
     padding: 20px;
     text-align: center;
-    width: 37.5%;
-    margin-left: 30%;
-    margin-top: 8%;
+    width: 40%;
+    margin: 5% auto 2%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* TABLE SECTION */
-table{
-    width: 40%;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
-    margin-left: 30%
+/* Main Section Styling */
+.receipt {
+    flex: 1;
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-table th{
+
+/* Table Styling */
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 2rem auto;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table th {
     background-color: #08992a;
     color: white;
     padding: 0.8rem;
     border: 1px solid #ddd;
+    text-align: left;
 }
-table td{
+
+table td {
     background-color: #f9f9f9;
     padding: 0.8rem;
     border: 1px solid #ddd;
+    text-align: left;
 }
 
-/* TOTAL SECTION */
-.totals{
+/* Totals Section */
+.totals {
     text-align: right;
-    margin-right: 30%;
+    margin-right: 10%;
     margin-top: 1%;
     font-size: 1rem;
 }
-.totals p{
+
+.totals p {
     margin: 0.5rem 0;
+    font-weight: bold;
 }
-hr{
+
+hr {
     width: 20%;
     margin-left: 80%;
+    border: 1px solid #ddd;
 }
-button{
+
+/* Button Styling */
+button {
     padding: 10px 23px;
     font-size: 1rem;
     font-weight: bold;
@@ -62,18 +89,40 @@ button{
     text-transform: uppercase;
     transition: all 0.3s ease;
 }
-  button[type="reset"]{
+
+button[type="reset"] {
     background: #f4b400;
     color: #fff;
     margin-left: 57%;
     margin-top: 3%;
 }
-  button[type="button"]{
+
+button[type="button"] {
     background: #d9534f;
     color: #fff;
-  }
-  button:hover{
+}
+
+button:hover {
     transform: scale(1.05);
     opacity: 0.9;
 }
-  
+
+/* Additional Styling for Responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        width: 80%;
+        margin: 10% auto 5%;
+    }
+
+    table {
+        width: 95%;
+    }
+
+    .totals {
+        margin-right: 5%;
+    }
+
+    button[type="reset"] {
+        margin-left: 40%;
+    }
+}
