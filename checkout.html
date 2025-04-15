@@ -4,73 +4,104 @@
   <meta charset="UTF-8" />
   <title>Checkout</title>
   <style>
-    body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background: #fef3f8; 
-}
+    {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  border: 1px solid #f8cce5; 
-}
-    .cart-summary {
-      line-height: 2;
-        margin-bottom: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+  }
 
-    label {
-      font-weight: bold;
-    }
+  h1 {
+    background: #08992a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
 
-    input {
-      width: 90%;
-      padding: 8px;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+  .container {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
 
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-    }
+  .cart-summary {
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
 
-    .buttons button {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
 
-    #confirmBtn {
-      background-color: #4CAF50;
-      color: white;
-      width: 30%;
-    }
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
 
-    #cancelBtn {
-      background-color: #f44336;
-      color: white;
-      margin-right: 7%;
-      width: 30%;
-    }
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
 
-    #totalDisplay {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
+  button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    width: 48%;
+  }
+
+  #confirmBtn {
+    background: #08992a;
+    color: white;
+  }
+
+  #cancelBtn {
+    background: #d9534f;
+    color: white;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+
+  #totalDisplay {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #08992a;
+    text-align: right;
+    margin-top: 10px;
+  }
   </style>
 </head>
 <body>
