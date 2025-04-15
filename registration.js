@@ -74,14 +74,14 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         FName,
         LName,
         DOB,
-        gender,
+        age,
+        gender: gender.toLowerCase(),
         celphone,
         trn: trnID.replace(/-/g,""),
         password,
         cart: {},
         invoices: []
-        age, 
-            gender: gender.toLowerCase()
+            
     }
 
     // This basically sends and saves the data before resetting the form.
