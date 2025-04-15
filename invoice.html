@@ -59,8 +59,14 @@
       // Get references to HTML elements for displaying invoice details
       document.getElementById("companyName").textContent = "Skin & Hair Essentials";
       document.getElementById("invoiceDate").textContent = new Date().toLocaleDateString();
-      document.getElementById("invoiceNumber").textContent = `INV-${Date.now()}`;
-      document.getElementById("trn").textContent = "123456789";
+      document.getElementById("invoiceNumber").textContent = checkoutData.invoiceId || `INV-${Date.now()}`;
+      const trnElem = document.getElementById("trn");
+let userTRN = sessionStorage.getItem('trn');
+if (!userTRN) {
+  
+  userTRN = "N/A";
+}
+trnElem.textContent = userTRN;
       document.getElementById("shippingInfo").textContent = `${checkoutData.name}, ${checkoutData.address}`;
       document.getElementById("subtotal").textContent = checkoutData.subtotal;
       document.getElementById("tax").textContent = checkoutData.tax;
