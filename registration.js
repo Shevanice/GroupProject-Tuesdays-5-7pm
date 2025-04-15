@@ -87,6 +87,9 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     // This basically sends and saves the data before resetting the form.
     registration.push(userData)
     // stringify changes JS objects into JSON objects for saving purposes.
+
+sessionStorage.setItem("trn", userData.trn);
+        
     // The double lines and brackets makes sure it isn't empty.
     localStorage.setItem("RegistrationData", JSON.stringify(registration)) || []
     alert("Registration Successful")
