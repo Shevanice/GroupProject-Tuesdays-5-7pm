@@ -37,7 +37,14 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     }
 
     // Calculating the age
-    const age= currentYear- DateofBirth.getFullYear()
+    const birthDate = new Date(DOB);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        
     if (age< 18){
         alert("You must be 18 years or older to register")
         return
@@ -73,7 +80,8 @@ document.addEventListener("DOMContentLoaded",(event)=>{
         password,
         cart: {},
         invoices: []
-        
+        age, 
+            gender: gender.toLowerCase()
     }
 
     // This basically sends and saves the data before resetting the form.
