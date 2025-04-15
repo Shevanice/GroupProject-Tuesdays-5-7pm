@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="invoice.css">
+  <link rel="stylesheet" href="invoice-group.css">
   <title>Invoice</title>
 </head>
 <body>
@@ -57,26 +57,18 @@
       }
 
       // Get references to HTML elements for displaying invoice details
-     document.getElementById("companyName").textContent = checkoutData.company || "Skin & Hair Essentials";
-document.getElementById("invoiceDate").textContent = checkoutData.date || new Date().toLocaleDateString();
-document.getElementById("invoiceNumber").textContent = checkoutData.invoiceId || `INV-${Date.now()}`;
-      const trnElem = document.getElementById("trn");
-let userTRN = sessionStorage.getItem('trn');
-if (!userTRN) {
-  
-  userTRN = "N/A";
-}
-trnElem.textContent = userTRN;
+      document.getElementById("companyName").textContent = "Skin & Hair Essentials";
+      document.getElementById("invoiceDate").textContent = new Date().toLocaleDateString();
+      document.getElementById("invoiceNumber").textContent = `INV-${Date.now()}`;
+      // document.getElementById("trn").textContent = "123456789";
       document.getElementById("shippingInfo").textContent = `${checkoutData.name}, ${checkoutData.address}`;
       document.getElementById("subtotal").textContent = checkoutData.subtotal;
       document.getElementById("tax").textContent = checkoutData.tax;
       document.getElementById("discount").textContent = checkoutData.discount;
       document.getElementById("total").textContent = checkoutData.total;
 
-      // Set the TRN and Shipping Information
-      const trnElem = document.getElementById("trn");
-
       // Retrieve the TRN entered by the user from sessionStorage or generate one
+      const trnElem = document.getElementById("trn");
       let userTRN = sessionStorage.getItem('trn');
       if (!userTRN) {
         // Generate a random 9-digit TRN if none is provided
@@ -84,6 +76,11 @@ trnElem.textContent = userTRN;
         sessionStorage.setItem('trn', userTRN); // Save the generated TRN for future use
       }
       trnElem.textContent = userTRN; // Set the TRN in the HTML element
+
+      // Retrieve shipping information from sessionStorage or use a default message
+      const shippingInfoElem = document.getElementById("shippingInfo");
+      const shippingInfo = sessionStorage.getItem('shippingInfo') || "No shipping information provided.";
+      shippingInfoElem.textContent = shippingInfo;
 
 
       // Populate product list
@@ -133,7 +130,7 @@ trnElem.textContent = userTRN;
         sessionStorage.removeItem("selectedProducts");
 
         alert("Exiting invoice. Thank you for shopping!");
-        window.location.href = "products.html"; // Redirect to products page
+        window.location.href = "products-group.html"; // Redirect to products page
       });
     });
   </script>
