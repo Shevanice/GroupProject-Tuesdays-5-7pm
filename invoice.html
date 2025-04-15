@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -133,3 +133,139 @@
   </script>
 </body>
 </html>
+ -->
+
+ Sure! Here's the revised and complete code for the invoice page, ensuring that all the necessary adjustments are made for retrieving, displaying, and managing invoice details:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="invoice.css" />
+  <title>Invoice</title>
+</head>
+<body>
+  <h1>Invoice Receipt</h1>
+
+  <section class="invoice-details">
+    <p><strong>Company Name:</strong> <span id="companyName">Skin & Hair Essentials</span></p>
+    <p><strong>Date:</strong> <span id="invoiceDate"></span></p>
+    <p><strong>Invoice Number:</strong> <span id="invoiceNumber"></span></p>
+    <p><strong>TRN:</strong> <span id="trn">123456789</span></p>
+    <p><strong>Shipping Information:</strong> <span id="shippingInfo"></span></p>
+  </section>
+
+  <section class="receipt">
+    <table>
+      <tr>
+        <th colspan="4" class="table-header">Purchased Products</th>
+      </tr>
+      <tr>
+        <th>Product</th>
+        <th>Price (JMD)</th>
+        <th>Quantity</th>
+        <th>Total (JMD)</th>
+      </tr>
+      <tbody id="productList"></tbody>
+    </table>
+
+    <div class="totals">
+      <p>Subtotal: <span id="subtotal">0</span> JMD</p>
+      <p>GCT: <span id="tax">0</span> JMD</p>
+      <p>Discount: <span id="discount">0</span> JMD</p>
+      <hr>
+      <p class="total-amount">Total: <span id="total">0</span> JMD</p>
+    </div>
+
+    <div class="buttons">
+      <button type="reset">Cancel</button>
+      <button type="button" id="exitBtn">Exit</button>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get references to HTML elements for displaying invoice details
+      const companyNameElem = document.getElementById('companyName');
+      const invoiceDateElem = document.getElementById('invoiceDate');
+      const invoiceNumberElem = document.getElementById('invoiceNumber');
+      const trnElem = document.getElementById('trn');
+      const shippingInfoElem = document.getElementById('shippingInfo');
+      const productListElem = document.getElementById('productList');
+      const subtotalElem = document.getElementById('subtotal');
+      const taxElem = document.getElementById('tax');
+      const discountElem = document.getElementById('discount');
+      const totalElem = document.getElementById('total');
+
+      // Retrieve the invoice from localStorage (stored during checkout)
+      const invoice = JSON.parse(localStorage.getItem('CheckoutInvoice'));
+
+      if (!invoice) {
+        alert("No invoice to display. Redirecting...");
+        window.location.href = "checkout.html";
+        return;
+      }
+
+      // Set the invoice details using data from the stored invoice
+      companyNameElem.textContent = invoice.companyName || "Skin & Hair Essentials";
+      invoiceDateElem.textContent = invoice.date || new Date().toLocaleDateString();
+      invoiceNumberElem.textContent = invoice.invoiceNumber || `INV-${Date.now()}`;
+      trnElem.textContent = invoice.trn;
+      shippingInfoElem.textContent = invoice.shippingInfo;
+
+      // Loop through the products and display them in the table
+      if (invoice.products && invoice.products.length > 0) {
+        invoice.products.forEach(product => {
+          const row = document.createElement('tr');
+          const productTotal = product.price * product.quantity;
+          row.innerHTML = `
+            <td>${product.name}</td>
+            <td>${product.price.toFixed(2)}</td>
+            <td>${product.quantity}</td>
+            <td>${productTotal.toFixed(2)}</td>
+          `;
+          productListElem.appendChild(row);
+        });
+      } else {
+        productListElem.innerHTML = '<tr><td colspan="4">No products selected.</td></tr>';
+      }
+
+      // Display the calculated totals
+      subtotalElem.textContent = invoice.subtotal.toFixed(2);
+      taxElem.textContent = invoice.tax.toFixed(2);
+      discountElem.textContent = invoice.discount.toFixed(2);
+      totalElem.textContent = invoice.total.toFixed(2);
+
+      // Event listener for the "Cancel" button
+      document.querySelector('button[type="reset"]').addEventListener('click', function () {
+        // Retrieve updated stock from sessionStorage
+        let updatedStock = JSON.parse(sessionStorage.getItem('updatedStock')) || [];
+
+        // Restore stock quantities for canceled products
+        invoice.products.forEach(product => {
+          let stockItem = updatedStock.find(item => item.name === product.name);
+          if (stockItem) {
+            stockItem.quantity += product.quantity; // Increment stock quantity
+          }
+        });
+
+        // Save updated stock and restore the cart
+        sessionStorage.setItem('updatedStock', JSON.stringify(updatedStock));
+        sessionStorage.setItem('selectedProducts', JSON.stringify(invoice.products));
+        alert("Order canceled and items restored to your cart.");
+        window.location.href = 'cart.html';
+      });
+
+      // Event listener for the "Exit" button
+      document.getElementById('exitBtn').addEventListener('click', function () {
+        sessionStorage.removeItem('selectedProducts'); // Clear cart
+        localStorage.removeItem('CheckoutInvoice'); // Remove the current invoice
+        alert("Exiting invoice. Cart cleared.");
+        window.location.href = 'products.html'; // Redirect
+      });
+    });
+  </script>
+</body>
+</html>
+
+
