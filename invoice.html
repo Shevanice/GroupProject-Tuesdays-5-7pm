@@ -167,7 +167,7 @@
       // Append the new invoice to the array
       allInvoices.push(invoice);
 
-      // Store the updated array back to localStorage
+      // Store the updated array back in localStorage
       localStorage.setItem('AllInvoices', JSON.stringify(allInvoices));
 
       // Store the latest invoice separately for checkout.html
@@ -176,9 +176,9 @@
       // Clear the cart after successful checkout
       sessionStorage.removeItem('selectedProducts');
 
-      // Notify the user and redirect to the checkout page
-      alert("Your invoice has been sent to your email and saved.");
-      window.location.href = 'checkout.html';
+      // Notify the user and redirect to the invoice page
+      alert("Your invoice has been sent to your email.");
+      window.location.href = 'invoice.html';
     });
   </script>
 </body>
