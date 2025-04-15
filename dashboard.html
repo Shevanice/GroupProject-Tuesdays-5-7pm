@@ -153,14 +153,14 @@ function ShowUserFrequency() {
  function ShowInvoices() {
     const registrationData = JSON.parse(localStorage.getItem("RegistrationData")) || [];
     const invoiceTable = document.getElementById("invoiceTable").getElementsByTagName("tbody")[0];
-    const searchInput = document.getElementById("invoiceSearch").value.trim();
+    const searchInput = document.getElementById("invoiceSearch").value.trim().replace(/-/g, "");
 
     invoiceTable.innerHTML = "";
 
      registrationData.forEach(user => {
       if (!user.invoices || user.invoices.length === 0) return;
 
-         if (searchInput && user.trn !== searchInput) return;
+         if (searchInput && user.trn.replace(/-/g, "") !== searchInput) return;
 
       user.invoices.forEach(invoice => {
         const row = document.createElement("tr");
@@ -174,6 +174,8 @@ function ShowUserFrequency() {
         invoiceTable.appendChild(row);
 
           console.log(`Invoice Found for TRN ${user.trn}:`, invoice);
+          console.log("TRN searched:", searchInput);
+console.log("User TRN in loop:", user.trn);
       });
     });
   }
